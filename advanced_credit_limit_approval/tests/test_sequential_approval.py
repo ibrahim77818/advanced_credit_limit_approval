@@ -172,7 +172,7 @@ class TestSequentialApproval(AclaTestCommon):
         self.env.invalidate_all()
         portal_user = self.env['res.users'].sudo().create({
             'name': 'Portal', 'login': 'acla_portal',
-            'groups_id': [Command.set(self.env.ref('base.group_portal').ids)],
+            'group_ids': [Command.set(self.env.ref('base.group_portal').ids)],
         })
         with self.assertRaises(ValidationError), self.cr.savepoint():
             self.team.sudo().write({'acla_approver_ids': [Command.create({'user_id': portal_user.id})]})

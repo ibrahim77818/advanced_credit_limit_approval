@@ -4,8 +4,8 @@ from odoo.exceptions import UserError
 
 # Line fields that change the amount of the order
 LOCKED_LINE_FIELDS = {
-    'product_id', 'product_template_id', 'product_uom_qty', 'product_uom',
-    'price_unit', 'discount', 'tax_id', 'order_id', 'display_type',
+    'product_id', 'product_template_id', 'product_uom_qty', 'product_uom_id',
+    'price_unit', 'discount', 'tax_ids', 'order_id', 'display_type',
 }
 
 

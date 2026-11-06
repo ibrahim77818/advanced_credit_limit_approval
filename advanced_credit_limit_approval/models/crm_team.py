@@ -27,10 +27,10 @@ class AclaTeamApprover(models.Model):
         domain="[('share', '=', False)]")
     company_id = fields.Many2one(related='team_id.company_id', store=True)
 
-    _sql_constraints = [
-        ('team_user_uniq', 'unique(team_id, user_id)',
-         'A user can appear only once in the approval sequence of a Sales Team.'),
-    ]
+    _team_user_uniq = models.Constraint(
+        'unique(team_id, user_id)',
+        'A user can appear only once in the approval sequence of a Sales Team.',
+    )
 
     @api.depends('team_id.acla_approver_ids', 'sequence')
     def _compute_tier(self):

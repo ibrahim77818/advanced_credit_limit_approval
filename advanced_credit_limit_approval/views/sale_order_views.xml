@@ -24,6 +24,7 @@
             <xpath expr="//sheet" position="before">
                 <field name="acla_tracking_enabled" invisible="1"/>
                 <field name="acla_partner_blacklisted" invisible="1"/>
+                <field name="locked" invisible="1"/>
                 <div class="alert alert-danger mb-0 o_acla_banner" role="alert"
                      invisible="not acla_tracking_enabled or not acla_partner_blacklisted or state not in ('draft', 'sent')">
                     <i class="fa fa-ban" title="Blacklisted" role="img" aria-label="Blacklisted"/>

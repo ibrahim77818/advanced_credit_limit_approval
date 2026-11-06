@@ -74,7 +74,7 @@ class AclaTestCommon(AccountTestInvoicingCommon):
             'email': '%s@example.com' % login,
             'company_id': cls.company.id,
             'company_ids': [Command.set(cls.company.ids)],
-            'groups_id': [Command.set(groups.ids)],
+            'group_ids': [Command.set(groups.ids)],
         })
 
     def _create_order(self, amount, partner=None, user=None):
@@ -89,7 +89,7 @@ class AclaTestCommon(AccountTestInvoicingCommon):
                 'product_id': self.product.id,
                 'product_uom_qty': 1.0,
                 'price_unit': amount,
-                'tax_id': [Command.clear()],
+                'tax_ids': [Command.clear()],
             })],
         })
 

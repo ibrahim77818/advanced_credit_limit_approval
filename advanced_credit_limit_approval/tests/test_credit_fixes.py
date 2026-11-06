@@ -19,7 +19,7 @@ class TestCreditFixes(AclaTestCommon):
 
     def _add_line(self, order, amount, user=None, **extra):
         vals = dict(product_id=self.product.id, product_uom_qty=1.0,
-                    price_unit=amount, tax_id=[Command.clear()], **extra)
+                    price_unit=amount, tax_ids=[Command.clear()], **extra)
         order.with_user(user or self.salesman).write({'order_line': [Command.create(vals)]})
 
     # ------------------------------------------------------------------
