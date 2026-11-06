@@ -10,13 +10,13 @@
                 <field name="acla_can_withdraw" invisible="1"/>
                 <button name="action_acla_approve" type="object" string="Approve"
                         class="btn-primary" data-hotkey="shift+a"
-                        attrs="{'invisible': [('acla_is_current_approver', '=', False)]}"/>
+                        invisible="not acla_is_current_approver"/>
                 <button name="action_acla_open_reject_wizard" type="object" string="Reject"
                         class="btn-danger" data-hotkey="shift+r"
-                        attrs="{'invisible': [('acla_is_current_approver', '=', False)]}"/>
+                        invisible="not acla_is_current_approver"/>
                 <button name="action_acla_withdraw" type="object" string="Withdraw from Approval"
                         confirm="The order will go back to Quotation and the pending approvals will be cancelled. Continue?"
-                        attrs="{'invisible': [('acla_can_withdraw', '=', False)]}"/>
+                        invisible="not acla_can_withdraw"/>
             </xpath>
             <xpath expr="//header/field[@name='state']" position="attributes">
                 <attribute name="statusbar_visible">draft,sent,waiting_approval,sale</attribute>
@@ -25,33 +25,56 @@
                 <field name="acla_tracking_enabled" invisible="1"/>
                 <field name="acla_partner_blacklisted" invisible="1"/>
                 <div class="alert alert-danger mb-0 o_acla_banner" role="alert"
-                     attrs="{'invisible': ['|', '|', ('acla_tracking_enabled', '=', False), ('acla_partner_blacklisted', '=', False), ('state', 'not in', ['draft', 'sent'])]}">
+                     invisible="not acla_tracking_enabled or not acla_partner_blacklisted or state not in ('draft', 'sent')">
                     <i class="fa fa-ban" title="Blacklisted" role="img" aria-label="Blacklisted"/>
                     This customer is blacklisted for exceeding the credit limit. Confirmation requires credit approval.
                 </div>
                 <div class="alert alert-info mb-0 o_acla_banner" role="alert"
-                     attrs="{'invisible': [('state', '!=', 'waiting_approval')]}">
+                     invisible="state != 'waiting_approval'">
                     <i class="fa fa-hourglass-half" title="Waiting" role="img" aria-label="Waiting"/>
                     Waiting for credit approval from <field name="acla_current_approver_id" class="fw-bold" readonly="1"/>.
                 </div>
             </xpath>
+            <!-- v17: `states=` on fields is gone, lock the header in the view
+                 (the server-side guard in sale.order.write() stays in place) -->
+            <xpath expr="//group[@name='partner_details']/field[@name='partner_id']" position="attributes">
+                <attribute name="readonly">state in ['cancel', 'sale', 'waiting_approval']</attribute>
+            </xpath>
+            <xpath expr="//group[@name='partner_details']/field[@name='partner_invoice_id']" position="attributes">
+                <attribute name="readonly">state in ['cancel', 'waiting_approval'] or locked</attribute>
+            </xpath>
+            <xpath expr="//group[@name='partner_details']/field[@name='partner_shipping_id']" position="attributes">
+                <attribute name="readonly">state in ['cancel', 'waiting_approval'] or locked</attribute>
+            </xpath>
+            <xpath expr="//group[@name='order_details']/div/field[@name='pricelist_id']" position="attributes">
+                <attribute name="readonly">state in ['cancel', 'sale', 'waiting_approval']</attribute>
+            </xpath>
+            <xpath expr="//group[@name='order_details']/field[@name='pricelist_id']" position="attributes">
+                <attribute name="readonly">state in ['cancel', 'sale', 'waiting_approval']</attribute>
+            </xpath>
+            <xpath expr="//group[@name='order_details']/field[@name='payment_term_id']" position="attributes">
+                <attribute name="readonly">state == 'waiting_approval'</attribute>
+            </xpath>
+            <xpath expr="//group[@name='sale_info']//field[@name='fiscal_position_id']" position="attributes">
+                <attribute name="readonly">state == 'waiting_approval'</attribute>
+            </xpath>
             <xpath expr="//field[@name='order_line']" position="attributes">
-                <attribute name="attrs">{'readonly': [('state', 'in', ('done', 'cancel', 'waiting_approval'))]}</attribute>
+                <attribute name="readonly">state in ['cancel', 'waiting_approval'] or locked</attribute>
             </xpath>
             <xpath expr="//notebook" position="inside">
                 <page string="Credit Approval" name="acla_credit_approval"
-                      attrs="{'invisible': [('acla_approval_line_ids', '=', [])]}">
+                      invisible="not acla_approval_line_ids">
                     <group>
                         <group>
                             <field name="acla_company_currency_id" invisible="1"/>
                             <field name="acla_projected_exposure"
-                                   attrs="{'invisible': [('acla_tracking_enabled', '=', False)]}"/>
+                                   invisible="not acla_tracking_enabled"/>
                             <field name="acla_approval_round"/>
                         </group>
                         <group>
                             <field name="acla_approval_reason"/>
                             <field name="acla_rejection_reason"
-                                   attrs="{'invisible': [('acla_rejection_reason', '=', False)]}"/>
+                                   invisible="not acla_rejection_reason"/>
                         </group>
                     </group>
                     <field name="acla_approval_line_ids" readonly="1">

@@ -2,7 +2,7 @@
 Advanced Credit Limit & Sequential Approval
 ===========================================
 
-Odoo 16 (Community & Enterprise). Arabic (``ar_001``) translation included.
+Odoo 17 (Community & Enterprise). Arabic (``ar_001``) translation included.
 
 Configuration
 =============

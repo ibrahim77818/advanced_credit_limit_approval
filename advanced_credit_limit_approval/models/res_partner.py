@@ -173,7 +173,7 @@ class ResPartner(models.Model):
         company_currency = company.currency_id
 
         # 1. Posted, open receivables
-        aml_groups = self.env['account.move.line'].sudo().read_group(
+        aml_groups = self.env['account.move.line'].sudo()._read_group(
             [
                 ('partner_id', 'in', members.ids),
                 ('company_id', '=', company.id),
@@ -181,17 +181,17 @@ class ResPartner(models.Model):
                 ('parent_state', '=', 'posted'),
                 ('reconciled', '=', False),
             ],
-            ['amount_residual:sum'], ['partner_id'], lazy=False)
-        for group in aml_groups:
-            cp_id = to_commercial.get(group['partner_id'][0]) if group['partner_id'] else None
+            groupby=['partner_id'], aggregates=['amount_residual:sum'])
+        for partner, amount in aml_groups:
+            cp_id = to_commercial.get(partner.id)
             if cp_id in result:
-                result[cp_id]['ar'] += group['amount_residual'] or 0.0
+                result[cp_id]['ar'] += amount or 0.0
 
         # 2. Un-invoiced part of confirmed sales orders (tax included)
         orders = self.env['sale.order'].sudo().search([
             ('partner_id', 'in', members.ids),
             ('company_id', '=', company.id),
-            ('state', 'in', ('sale', 'done')),
+            ('state', 'in', ('sale',)),
         ])
         for order in orders:
             remaining = order._acla_get_uninvoiced_amount()
@@ -206,18 +206,18 @@ class ResPartner(models.Model):
         # 3. Draft customer payments: optional, off by default (an unconfirmed
         #    draft must not free up credit unless the company decides so)
         if company.acla_deduct_draft_payments:
-            pay_groups = self.env['account.payment'].sudo().read_group(
+            pay_groups = self.env['account.payment'].sudo()._read_group(
                 [
                     ('partner_id', 'in', members.ids),
                     ('company_id', '=', company.id),
                     ('state', '=', 'draft'),
                     ('partner_type', '=', 'customer'),
                 ],
-                ['amount_company_currency_signed:sum'], ['partner_id'], lazy=False)
-            for group in pay_groups:
-                cp_id = to_commercial.get(group['partner_id'][0]) if group['partner_id'] else None
+                groupby=['partner_id'], aggregates=['amount_company_currency_signed:sum'])
+            for partner, amount in pay_groups:
+                cp_id = to_commercial.get(partner.id)
                 if cp_id in result:
-                    result[cp_id]['draft_payments'] += group['amount_company_currency_signed'] or 0.0
+                    result[cp_id]['draft_payments'] += amount or 0.0
 
         for vals in result.values():
             vals['total'] = company_currency.round(
@@ -324,11 +324,11 @@ class ResPartner(models.Model):
         # 2. E-mail to the customer
         template = self.env.ref(template_xmlid, raise_if_not_found=False)
         if template and self.email:
-            self.message_post_with_template(
-                template.id,
+            self.message_post_with_source(
+                template,
                 email_layout_xmlid='mail.mail_notification_light',
                 message_type='comment',
-                subtype_id=self.env['ir.model.data']._xmlid_to_res_id('mail.mt_comment'),
+                subtype_xmlid='mail.mt_comment',
             )
         elif template:
             self.message_post(

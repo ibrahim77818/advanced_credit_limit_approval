@@ -11,7 +11,7 @@ ACT_APPROVAL_XMLID = 'advanced_credit_limit_approval.mail_act_credit_approval'
 TPL_REJECT_XMLID = 'advanced_credit_limit_approval.mail_template_sale_credit_rejected'
 
 # States in which an order counts in the exposure as confirmed
-CONFIRMED_STATES = ('sale', 'done')
+CONFIRMED_STATES = ('sale',)
 
 # Context keys that allow internal state transitions of waiting orders
 INTERNAL_CTX_KEYS = ('acla_internal_write', 'acla_skip_credit_check')
@@ -23,10 +23,6 @@ LOCKED_ORDER_FIELDS = {
     'team_id', 'order_line',
 }
 
-_WAITING_READONLY = {'waiting_approval': [('readonly', True)]}
-_READONLY_STATES = dict({s: [('readonly', True)] for s in ('sale', 'done', 'cancel')}, **_WAITING_READONLY)
-_LOCKED_STATES = dict({s: [('readonly', True)] for s in ('done', 'cancel')}, **_WAITING_READONLY)
-
 
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
@@ -34,14 +30,6 @@ class SaleOrder(models.Model):
     state = fields.Selection(
         selection_add=[('waiting_approval', 'Waiting Approval'), ('sale',)],
         ondelete={'waiting_approval': lambda recs: recs.write({'state': 'draft'})})
-
-    # Lock the commercial header while waiting for approval
-    partner_id = fields.Many2one(states=_READONLY_STATES)
-    pricelist_id = fields.Many2one(states=_READONLY_STATES)
-    partner_invoice_id = fields.Many2one(states=_LOCKED_STATES)
-    partner_shipping_id = fields.Many2one(states=_LOCKED_STATES)
-    payment_term_id = fields.Many2one(states=_LOCKED_STATES)
-    fiscal_position_id = fields.Many2one(states=_LOCKED_STATES)
 
     acla_tracking_enabled = fields.Boolean(related='company_id.acla_credit_limit_enabled', string='Credit Tracking Enabled')
     acla_company_currency_id = fields.Many2one(related='company_id.currency_id', string='Company Currency')
@@ -261,6 +249,14 @@ class SaleOrder(models.Model):
             order._acla_submit_for_approval(reason)
         return res
 
+    def _can_be_confirmed(self):
+        # v17: action_confirm() only accepts draft/sent orders. The final
+        # approval (sudo + internal context) confirms a 'waiting_approval' one.
+        if (self.state == 'waiting_approval' and self.env.su
+                and self.env.context.get('acla_skip_credit_check')):
+            return True
+        return super()._can_be_confirmed()
+
     def _acla_evaluate_customers(self):
         for order in self:
             if order.company_id.acla_credit_limit_enabled and order.partner_id:
@@ -384,11 +380,11 @@ class SaleOrder(models.Model):
             subtype_xmlid='mail.mt_note')
         template = self.env.ref(TPL_REJECT_XMLID, raise_if_not_found=False)
         if template and self.partner_id.email:
-            self.sudo().message_post_with_template(
-                template.id,
+            self.sudo().message_post_with_source(
+                template,
                 email_layout_xmlid='mail.mail_notification_light',
                 message_type='comment',
-                subtype_id=self.env['ir.model.data']._xmlid_to_res_id('mail.mt_comment'),
+                subtype_xmlid='mail.mt_comment',
             )
         return True
 

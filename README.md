@@ -1,6 +1,6 @@
 # Advanced Credit Limit & Sequential Approval
 
-Odoo **16.0** module (Community & Enterprise) &middot; technical name `advanced_credit_limit_approval` &middot; LGPL-3
+Odoo **17.0** module (Community & Enterprise) &middot; technical name `advanced_credit_limit_approval` &middot; LGPL-3
 
 Real-time customer credit exposure, Warning / Blocking limits with automatic e-mail,
 chatter log and salesperson follow-up, automatic blacklisting with a black ribbon, and
@@ -13,8 +13,8 @@ Each Odoo version has its own branch; pick the one that matches your server.
 
 | Odoo | Branch | Editions |
 |------|--------|----------|
-| **16.0** | [`16.0`](https://github.com/ibrahim77818/advanced_credit_limit_approval/tree/16.0) | Community & Enterprise |
-| 17.0 | [`17.0`](https://github.com/ibrahim77818/advanced_credit_limit_approval/tree/17.0) | Community & Enterprise |
+| 16.0 | [`16.0`](https://github.com/ibrahim77818/advanced_credit_limit_approval/tree/16.0) | Community & Enterprise |
+| **17.0** | [`17.0`](https://github.com/ibrahim77818/advanced_credit_limit_approval/tree/17.0) | Community & Enterprise |
 | 18.0 | [`18.0`](https://github.com/ibrahim77818/advanced_credit_limit_approval/tree/18.0) | Community & Enterprise |
 | 19.0 | [`19.0`](https://github.com/ibrahim77818/advanced_credit_limit_approval/tree/19.0) | Community & Enterprise |
 
@@ -36,13 +36,13 @@ Each Odoo version has its own branch; pick the one that matches your server.
 
 ## Installation
 
-1. Copy the `advanced_credit_limit_approval` folder of the `16.0` branch into your addons path
-   (or add this repository to your Odoo.sh project on branch `16.0`).
+1. Copy the `advanced_credit_limit_approval` folder of the `17.0` branch into your addons path
+   (or add this repository to your Odoo.sh project on branch `17.0`).
 2. Update the Apps list and install **Advanced Credit Limit & Sequential Approval**.
 3. Dependencies: `sale_management`, `account`. No extra Python packages.
 
 ```bash
-git clone -b 16.0 https://github.com/ibrahim77818/advanced_credit_limit_approval.git
+git clone -b 17.0 https://github.com/ibrahim77818/advanced_credit_limit_approval.git
 ```
 
 ## Configuration

@@ -86,8 +86,8 @@ class TestCreditExposure(AclaTestCommon):
         # Full credit note linked to the order: receivables and order net to 0
         reversal = self.env['account.move.reversal'].with_context(
             active_model='account.move', active_ids=invoice.ids,
-        ).create({'journal_id': invoice.journal_id.id, 'refund_method': 'refund'})
-        credit_note = self.env['account.move'].browse(reversal.reverse_moves()['res_id'])
+        ).create({'journal_id': invoice.journal_id.id})
+        credit_note = self.env['account.move'].browse(reversal.refund_moves()['res_id'])
         credit_note.action_post()
         self.assertExposure(self.exp_customer, 0.0, 800.0, 0.0, 800.0)
 

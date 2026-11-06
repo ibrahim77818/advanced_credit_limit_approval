@@ -9,7 +9,7 @@
                 <button name="action_acla_evaluate_credit" type="object" class="oe_stat_button"
                         icon="fa-shield"
                         groups="sales_team.group_sale_salesman,account.group_account_invoice"
-                        attrs="{'invisible': [('acla_tracking_enabled', '=', False)]}">
+                        invisible="not acla_tracking_enabled">
                     <div class="o_field_widget o_stat_info">
                         <span class="o_stat_value">
                             <field name="acla_exposure_amount" widget="monetary"
@@ -27,23 +27,23 @@
                 <field name="acla_can_edit_limits" invisible="1"/>
                 <field name="acla_deduct_draft_payments" invisible="1"/>
                 <widget name="web_ribbon" title="Blacklisted" bg_color="bg-dark"
-                        attrs="{'invisible': [('acla_is_blacklisted', '=', False)]}"/>
+                        invisible="not acla_is_blacklisted"/>
                 <widget name="web_ribbon" title="Credit Warning" bg_color="bg-warning"
-                        attrs="{'invisible': ['|', '|', ('acla_tracking_enabled', '=', False), ('acla_is_blacklisted', '=', True), ('acla_credit_status', '!=', 'warning')]}"/>
+                        invisible="not acla_tracking_enabled or acla_is_blacklisted or acla_credit_status != 'warning'"/>
             </xpath>
             <xpath expr="//page[@name='sales_purchases']" position="after">
                 <page string="Credit Control" name="acla_credit_control"
                       groups="sales_team.group_sale_salesman,account.group_account_invoice"
-                      attrs="{'invisible': [('acla_tracking_enabled', '=', False)]}">
+                      invisible="not acla_tracking_enabled">
                     <div class="alert alert-info o_acla_banner" role="alert"
-                         attrs="{'invisible': ['|', ('is_company', '=', True), ('parent_id', '=', False)]}">
+                         invisible="is_company or not parent_id">
                         Credit limits and exposure are managed on the parent company.
                     </div>
                     <group>
                         <group string="Limits" name="acla_limits">
-                            <field name="acla_warning_amount" attrs="{'readonly': ['|', ('acla_can_edit_limits', '=', False), ('parent_id', '!=', False)]}"
+                            <field name="acla_warning_amount" readonly="not acla_can_edit_limits or parent_id"
                                    widget="monetary" options="{'currency_field': 'acla_currency_id'}"/>
-                            <field name="acla_blocking_amount" attrs="{'readonly': ['|', ('acla_can_edit_limits', '=', False), ('parent_id', '!=', False)]}"
+                            <field name="acla_blocking_amount" readonly="not acla_can_edit_limits or parent_id"
                                    widget="monetary" options="{'currency_field': 'acla_currency_id'}"/>
                             <field name="acla_credit_status" widget="badge"
                                    decoration-success="acla_credit_status == 'normal'"
@@ -54,10 +54,10 @@
                             <field name="acla_ar_amount"/>
                             <field name="acla_uninvoiced_amount"/>
                             <field name="acla_draft_payment_amount"
-                                   attrs="{'invisible': [('acla_deduct_draft_payments', '=', False)]}"/>
+                                   invisible="not acla_deduct_draft_payments"/>
                             <field name="acla_exposure_amount" class="fw-bold"/>
                             <field name="acla_available_amount"
-                                   attrs="{'invisible': [('acla_blocking_amount', '=', 0)]}"/>
+                                   invisible="not acla_blocking_amount"/>
                         </group>
                     </group>
                     <button name="action_acla_evaluate_credit" type="object" class="btn-secondary"
