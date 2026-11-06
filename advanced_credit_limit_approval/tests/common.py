@@ -8,8 +8,9 @@ class AclaTestCommon(AccountTestInvoicingCommon):
     installs a chart of accounts in a dedicated test company."""
 
     @classmethod
-    def setUpClass(cls, chart_template_ref=None):
-        super().setUpClass(chart_template_ref=chart_template_ref)
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.company_data_2 = cls.setup_other_company()
         cls.company = cls.company_data['company']
         cls.company.write({
             'acla_credit_limit_enabled': True,

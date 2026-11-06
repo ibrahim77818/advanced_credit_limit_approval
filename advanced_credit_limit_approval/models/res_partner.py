@@ -73,6 +73,12 @@ class ResPartner(models.Model):
         compute='_compute_acla_exposure',
         help='Customer payments not yet posted. Deducted from the exposure only '
              'when "Deduct Draft Payments" is enabled in the Sales settings.')
+    acla_unbooked_payment_amount = fields.Monetary(
+        string='Confirmed Payments Not Yet Booked', currency_field='acla_currency_id',
+        compute='_compute_acla_exposure',
+        help='Confirmed customer payments ("In Process") that have no journal entry '
+             'yet because their payment method has no outstanding account. They are '
+             'deducted from the exposure until they are matched with the bank.')
     acla_exposure_amount = fields.Monetary(
         string='Credit Exposure', currency_field='acla_currency_id',
         compute='_compute_acla_exposure',
@@ -117,8 +123,9 @@ class ResPartner(models.Model):
         for partner in self:
             vals = data.get(partner.commercial_partner_id.id) if partner.id else None
             if not vals:
-                vals = dict(ar=0.0, uninvoiced=0.0, draft_payments=0.0, total=0.0)
+                vals = dict(ar=0.0, uninvoiced=0.0, draft_payments=0.0, unbooked=0.0, total=0.0)
             partner.acla_ar_amount = vals['ar']
+            partner.acla_unbooked_payment_amount = vals['unbooked']
             partner.acla_uninvoiced_amount = vals['uninvoiced']
             partner.acla_draft_payment_amount = vals['draft_payments']
             partner.acla_exposure_amount = vals['total']
@@ -153,6 +160,7 @@ class ResPartner(models.Model):
 
         exposure = posted receivables (open residual)
                  + un-invoiced part of confirmed sales orders (tax included)
+                 - confirmed payments without a journal entry (v18 "In Process")
                  - draft customer payments (only with "Deduct Draft Payments")
 
         :return: {commercial_partner_id: {'ar', 'uninvoiced', 'draft_payments', 'total'}}
@@ -160,7 +168,7 @@ class ResPartner(models.Model):
         company = self.env.company
         commercials = self.filtered('id').commercial_partner_id
         result = {
-            cp.id: dict(ar=0.0, uninvoiced=0.0, draft_payments=0.0, total=0.0)
+            cp.id: dict(ar=0.0, uninvoiced=0.0, draft_payments=0.0, unbooked=0.0, total=0.0)
             for cp in commercials
         }
         if not commercials:
@@ -219,9 +227,25 @@ class ResPartner(models.Model):
                 if cp_id in result:
                     result[cp_id]['draft_payments'] += amount or 0.0
 
+        # 4. Confirmed payments without a journal entry (v18: payment methods
+        #    without an outstanding account only book an entry at bank matching)
+        unbooked_groups = self.env['account.payment'].sudo()._read_group(
+            [
+                ('partner_id', 'in', members.ids),
+                ('company_id', '=', company.id),
+                ('state', '=', 'in_process'),
+                ('move_id', '=', False),
+                ('partner_type', '=', 'customer'),
+            ],
+            groupby=['partner_id'], aggregates=['amount_company_currency_signed:sum'])
+        for partner, amount in unbooked_groups:
+            cp_id = to_commercial.get(partner.id)
+            if cp_id in result:
+                result[cp_id]['unbooked'] += amount or 0.0
+
         for vals in result.values():
             vals['total'] = company_currency.round(
-                vals['ar'] + vals['uninvoiced'] - vals['draft_payments'])
+                vals['ar'] + vals['uninvoiced'] - vals['draft_payments'] - vals['unbooked'])
         return result
 
     def _acla_get_exposure(self):

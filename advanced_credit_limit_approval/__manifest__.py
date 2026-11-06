@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Advanced Credit Limit & Sequential Approval',
-    'version': '17.0.1.1.0',
+    'version': '18.0.1.1.0',
     'category': 'Sales/Sales',
     'summary': 'Real-time customer credit exposure, warning/blocking limits, '
                'automatic blacklisting and sequential Sales Team approvals.',

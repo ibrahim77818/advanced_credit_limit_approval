@@ -78,7 +78,7 @@
                         </group>
                     </group>
                     <field name="acla_approval_line_ids" readonly="1">
-                        <tree decoration-success="state == 'approved'"
+                        <list decoration-success="state == 'approved'"
                               decoration-danger="state == 'rejected'"
                               decoration-muted="state == 'cancelled'"
                               decoration-info="state == 'pending'">
@@ -91,7 +91,7 @@
                                    decoration-info="state == 'pending'"/>
                             <field name="action_date"/>
                             <field name="note"/>
-                        </tree>
+                        </list>
                     </field>
                 </page>
             </xpath>
@@ -128,7 +128,7 @@
     <record id="action_acla_orders_to_approve" model="ir.actions.act_window">
         <field name="name">Orders to Approve</field>
         <field name="res_model">sale.order</field>
-        <field name="view_mode">tree,form,kanban,activity</field>
+        <field name="view_mode">list,form,kanban,activity</field>
         <field name="domain">[('state', '=', 'waiting_approval')]</field>
         <field name="context">{'search_default_acla_my_approvals': 1}</field>
         <field name="search_view_id" ref="sale.view_sales_order_filter"/>

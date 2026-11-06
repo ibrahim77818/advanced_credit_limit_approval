@@ -10,8 +10,8 @@ from .common import AclaTestCommon
 class TestCreditExposure(AclaTestCommon):
 
     @classmethod
-    def setUpClass(cls, chart_template_ref=None):
-        super().setUpClass(chart_template_ref=chart_template_ref)
+    def setUpClass(cls):
+        super().setUpClass()
         # A customer without limits: exposure maths only, no breach side effects
         cls.exp_customer = cls.env['res.partner'].create({
             'name': 'Exposure Customer', 'is_company': True,
@@ -62,6 +62,7 @@ class TestCreditExposure(AclaTestCommon):
             'partner_id': self.exp_customer.id,
             'amount': 150.0,
             'journal_id': self.company_data['default_journal_bank'].id,
+            'payment_method_line_id': self.inbound_payment_method_line.id,
         })
         self.assertEqual(payment.state, 'draft')
         # off by default: a draft payment does not free up credit

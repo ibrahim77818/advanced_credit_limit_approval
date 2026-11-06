@@ -249,13 +249,14 @@ class SaleOrder(models.Model):
             order._acla_submit_for_approval(reason)
         return res
 
-    def _can_be_confirmed(self):
-        # v17: action_confirm() only accepts draft/sent orders. The final
+    def _confirmation_error_message(self):
+        # v18: action_confirm() refuses orders that are not draft/sent. The final
         # approval (sudo + internal context) confirms a 'waiting_approval' one.
+        self.ensure_one()
         if (self.state == 'waiting_approval' and self.env.su
                 and self.env.context.get('acla_skip_credit_check')):
-            return True
-        return super()._can_be_confirmed()
+            return False
+        return super()._confirmation_error_message()
 
     def _acla_evaluate_customers(self):
         for order in self:

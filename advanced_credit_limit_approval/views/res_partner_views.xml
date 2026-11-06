@@ -55,6 +55,8 @@
                             <field name="acla_uninvoiced_amount"/>
                             <field name="acla_draft_payment_amount"
                                    invisible="not acla_deduct_draft_payments"/>
+                            <field name="acla_unbooked_payment_amount"
+                                   invisible="not acla_unbooked_payment_amount"/>
                             <field name="acla_exposure_amount" class="fw-bold"/>
                             <field name="acla_available_amount"
                                    invisible="not acla_blocking_amount"/>

@@ -12,12 +12,12 @@
                         Each user can only act on their own tier.
                     </div>
                     <field name="acla_approver_ids">
-                        <tree editable="bottom">
+                        <list editable="bottom">
                             <field name="sequence" widget="handle"/>
                             <field name="tier"/>
                             <field name="user_id" widget="many2one_avatar_user"
                                    options="{'no_create': True}"/>
-                        </tree>
+                        </list>
                     </field>
                 </page>
             </xpath>

@@ -1,6 +1,6 @@
 # Advanced Credit Limit & Sequential Approval
 
-Odoo **17.0** module (Community & Enterprise) &middot; technical name `advanced_credit_limit_approval` &middot; LGPL-3
+Odoo **18.0** module (Community & Enterprise) &middot; technical name `advanced_credit_limit_approval` &middot; LGPL-3
 
 Real-time customer credit exposure, Warning / Blocking limits with automatic e-mail,
 chatter log and salesperson follow-up, automatic blacklisting with a black ribbon, and
@@ -14,8 +14,8 @@ Each Odoo version has its own branch; pick the one that matches your server.
 | Odoo | Branch | Editions |
 |------|--------|----------|
 | 16.0 | [`16.0`](https://github.com/ibrahim77818/advanced_credit_limit_approval/tree/16.0) | Community & Enterprise |
-| **17.0** | [`17.0`](https://github.com/ibrahim77818/advanced_credit_limit_approval/tree/17.0) | Community & Enterprise |
-| 18.0 | [`18.0`](https://github.com/ibrahim77818/advanced_credit_limit_approval/tree/18.0) | Community & Enterprise |
+| 17.0 | [`17.0`](https://github.com/ibrahim77818/advanced_credit_limit_approval/tree/17.0) | Community & Enterprise |
+| **18.0** | [`18.0`](https://github.com/ibrahim77818/advanced_credit_limit_approval/tree/18.0) | Community & Enterprise |
 | 19.0 | [`19.0`](https://github.com/ibrahim77818/advanced_credit_limit_approval/tree/19.0) | Community & Enterprise |
 
 ## Features
@@ -23,7 +23,7 @@ Each Odoo version has its own branch; pick the one that matches your server.
 - **Credit Limit Tracking** switch in *Sales › Configuration › Settings › Credit Limit Control* (per company, off by default).
 - **Blacklisted Customer Policy**: *Hard Block* (no sales orders) or *Force Approval* (quotations allowed, confirmation always approved).
 - **Real-time exposure** per commercial entity, in company currency:
-  open posted receivables + un-invoiced part of confirmed orders (tax included, net of posted invoices and credit notes) − draft payments *(only with **Deduct Draft Payments**, off by default)*.
+  open posted receivables + un-invoiced part of confirmed orders (tax included, net of posted invoices and credit notes) − confirmed payments not yet booked − draft payments *(only with **Deduct Draft Payments**, off by default)*.
 - **Warning / Blocking amounts** on the customer (*Credit Control* tab), validated: no negative amounts, warning ≤ blocking. Editable by Sales Administrators and Accounting Advisers only.
 - **Live Credit Status** computed from the current figures.
 - **Breach actions** (only on escalation, no duplicates): e-mail to the customer, chatter note, *Credit Limit Follow-Up* activity for the salesperson; on blocking, the **Blacklisted** tag and a black `web_ribbon` on the customer form.
@@ -34,15 +34,17 @@ Each Odoo version has its own branch; pick the one that matches your server.
 - **Orders to Approve** menu (*Sales › Orders*) filtered on *My Credit Approvals*.
 - Waiting orders are locked (header and lines) and cannot be confirmed or cancelled directly.
 
+> **Odoo 18+:** a confirmed payment on a payment method without an outstanding account stays *In Process* with no journal entry until bank matching. Those payments are shown as **Confirmed Payments Not Yet Booked** and reduce the exposure, without being counted twice once matched.
+
 ## Installation
 
-1. Copy the `advanced_credit_limit_approval` folder of the `17.0` branch into your addons path
-   (or add this repository to your Odoo.sh project on branch `17.0`).
+1. Copy the `advanced_credit_limit_approval` folder of the `18.0` branch into your addons path
+   (or add this repository to your Odoo.sh project on branch `18.0`).
 2. Update the Apps list and install **Advanced Credit Limit & Sequential Approval**.
 3. Dependencies: `sale_management`, `account`. No extra Python packages.
 
 ```bash
-git clone -b 17.0 https://github.com/ibrahim77818/advanced_credit_limit_approval.git
+git clone -b 18.0 https://github.com/ibrahim77818/advanced_credit_limit_approval.git
 ```
 
 ## Configuration
@@ -53,7 +55,7 @@ git clone -b 17.0 https://github.com/ibrahim77818/advanced_credit_limit_approval
 
 ## Tests
 
-38 `TransactionCase` tests (tagged `acla`, `post_install`) cover exposure calculation, live status,
+40 `TransactionCase` tests (tagged `acla`, `post_install`) cover exposure calculation, live status,
 breach actions and activities, blacklist policies, increases on confirmed orders, limit validation,
 sequential approval security, rejection, withdrawal and bypass protection.
 

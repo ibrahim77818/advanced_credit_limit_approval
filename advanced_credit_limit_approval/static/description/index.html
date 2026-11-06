@@ -1,4 +1,4 @@
-<!-- Odoo Apps description page for advanced_credit_limit_approval (Odoo 17.0). Inline styles only: apps.odoo.com strips <style> and <script> blocks. -->
+<!-- Odoo Apps description page for advanced_credit_limit_approval (Odoo 18.0). Inline styles only: apps.odoo.com strips <style> and <script> blocks. -->
 <section style="max-width:1120px;margin:0 auto;padding:0 16px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;color:#2b2b33;">
 
 <!-- ============================== HERO ============================== -->
@@ -7,9 +7,9 @@
   <h1 style="font-size:40px;line-height:1.15;font-weight:700;margin:0 0 14px;color:#ffffff;">Advanced Credit Limit &amp; Sequential Approval</h1>
   <p style="font-size:19px;line-height:1.55;max-width:760px;margin:0 0 24px;color:#ffffff;opacity:.95;">See every customer&rsquo;s real credit exposure the moment it changes, warn and blacklist automatically when limits are breached, and route risky orders through a strict, tier-by-tier Sales Team approval chain.</p>
   <div>
-    <span style="display:inline-block;border:1px solid rgba(255,255,255,.7);border-radius:20px;padding:6px 14px;margin:0 8px 8px 0;font-size:14px;">Odoo 17.0</span>
+    <span style="display:inline-block;border:1px solid rgba(255,255,255,.7);border-radius:20px;padding:6px 14px;margin:0 8px 8px 0;font-size:14px;">Odoo 18.0</span>
     <span style="display:inline-block;border:1px solid rgba(255,255,255,.7);border-radius:20px;padding:6px 14px;margin:0 8px 8px 0;font-size:14px;">Community &amp; Enterprise</span>
-    <span style="display:inline-block;border:1px solid rgba(255,255,255,.7);border-radius:20px;padding:6px 14px;margin:0 8px 8px 0;font-size:14px;">38 automated tests</span>
+    <span style="display:inline-block;border:1px solid rgba(255,255,255,.7);border-radius:20px;padding:6px 14px;margin:0 8px 8px 0;font-size:14px;">40 automated tests</span>
     <span style="display:inline-block;border:1px solid rgba(255,255,255,.7);border-radius:20px;padding:6px 14px;margin:0 8px 8px 0;font-size:14px;">Arabic (ar_001) &amp; RTL</span>
     <span style="display:inline-block;border:1px solid rgba(255,255,255,.7);border-radius:20px;padding:6px 14px;margin:0 8px 8px 0;font-size:14px;">Technical name: advanced_credit_limit_approval</span>
     <span style="display:inline-block;border:1px solid rgba(255,255,255,.7);border-radius:20px;padding:6px 14px;margin:0 8px 8px 0;font-size:14px;">LGPL-3</span>
@@ -29,7 +29,7 @@
 <p style="font-size:16px;color:#555;margin:0 0 18px;">Credit control fails when exposure is only known at month end and anyone can confirm an order. This module makes exposure live and puts the right people in the confirmation path.</p>
 <div style="display:flex;flex-wrap:wrap;margin:0 -10px;">
   <div style="flex:1 1 440px;margin:10px;border:1px solid #f1d6d6;background:#fff8f8;border-radius:14px;padding:24px 26px;">
-    <h3 style="font-size:19px;font-weight:700;color:#b33939;margin:0 0 12px;">In standard Odoo 17</h3>
+    <h3 style="font-size:19px;font-weight:700;color:#b33939;margin:0 0 12px;">In standard Odoo 18</h3>
     <ul style="font-size:15px;line-height:1.65;margin:0;padding-left:20px;color:#3a3a42;">
       <li>The partner <b>credit limit</b> is a single amount that only shows a warning banner on the order; nothing is blocked.</li>
       <li>There is <b>no automatic follow-up</b>: no customer e-mail, no task for the salesperson.</li>
@@ -90,7 +90,7 @@
   <h3 style="font-size:23px;font-weight:700;margin:4px 0 8px;">Real-time exposure, consolidated on the company</h3>
   <p style="font-size:15px;line-height:1.6;color:#555;margin:0 0 14px;">The <b>Credit Control</b> tab shows <b>Posted Receivables</b>, <b>Un-invoiced Confirmed Sales</b>, <b>Draft Customer Payments</b> (when deducted), the resulting <b>Credit Exposure</b>, the amount <b>Available Before Blocking</b> and a <b>Credit Status</b> computed live from the current figures. Limits are validated: no negative amounts, and the warning amount cannot exceed the blocking amount. Orders and invoices of every contact roll up to the commercial entity. On a blocking breach the customer receives the <b>Blacklisted</b> tag and a black ribbon; the chatter keeps the notification e-mails and the breach notes, and the salesperson gets a <b>Credit Limit Follow-Up</b> activity.</p>
   <img src="acla_03_customer_blacklisted.png" alt="Blacklisted customer with black ribbon, credit control tab and chatter" style="width:100%;border:1px solid #e1e1e6;border-radius:10px;box-shadow:0 6px 24px rgba(30,30,60,.10);"/>
-  <div style="background:#f4fbfb;border-left:4px solid #017E84;border-radius:8px;padding:16px 20px;font-size:15px;line-height:1.6;margin-top:14px;"><b>Formula:</b> Exposure = open posted receivables + un-invoiced part of confirmed orders (tax included, net of posted invoices and credit notes) &minus; draft customer payments <i>(only with Deduct Draft Payments)</i>.<br/><b>Example (demo company deducts draft payments):</b> SR&nbsp;41,200 + SR&nbsp;18,650 &minus; SR&nbsp;2,500 = <b>SR&nbsp;57,350</b> &gt; Blocking SR&nbsp;50,000 &rArr; status <b>Blocked</b>.</div>
+  <div style="background:#f4fbfb;border-left:4px solid #017E84;border-radius:8px;padding:16px 20px;font-size:15px;line-height:1.6;margin-top:14px;"><b>Formula:</b> Exposure = open posted receivables + un-invoiced part of confirmed orders (tax included, net of posted invoices and credit notes) &minus; confirmed payments not yet booked (<b>In Process</b>, no journal entry) &minus; draft customer payments <i>(only with Deduct Draft Payments)</i>.<br/><b>Example (demo company deducts draft payments):</b> SR&nbsp;41,200 + SR&nbsp;18,650 &minus; SR&nbsp;2,500 = <b>SR&nbsp;57,350</b> &gt; Blocking SR&nbsp;50,000 &rArr; status <b>Blocked</b>.</div>
 </div>
 
 <div style="margin:44px 0 0;">
@@ -150,6 +150,7 @@
   <div style="flex:1 1 320px;margin:8px;padding:16px 18px;border:1px solid #e8e8ee;border-radius:12px;"><b>Draft invoices and credit notes</b><br/><span style="color:#555;">Draft invoices stay in un-invoiced sales; posted credit notes linked to an order reopen its un-invoiced amount.</span></div>
   <div style="flex:1 1 320px;margin:8px;padding:16px 18px;border:1px solid #e8e8ee;border-radius:12px;"><b>Raising a confirmed order</b><br/><span style="color:#555;">Adding lines or raising quantities/prices on a confirmed order is refused when the new exposure exceeds the blocking amount or the customer is blacklisted; the extra goes on a new quotation for approval. Down payments and re-invoiced expenses are not blocked.</span></div>
   <div style="flex:1 1 320px;margin:8px;padding:16px 18px;border:1px solid #e8e8ee;border-radius:12px;"><b>Unconfirmed payments</b><br/><span style="color:#555;">Draft payments do not free up credit unless the company enables <b>Deduct Draft Payments</b>, so a draft cannot unblock a customer.</span></div>
+  <div style="flex:1 1 320px;margin:8px;padding:16px 18px;border:1px solid #e8e8ee;border-radius:12px;"><b>Payments without journal entries</b><br/><span style="color:#555;">In Odoo 18, a confirmed payment on a method without an outstanding account stays <b>In Process</b> with no entry until bank matching. These payments are shown as <b>Confirmed Payments Not Yet Booked</b> and reduce the exposure, without being counted twice once matched.</span></div>
   <div style="flex:1 1 320px;margin:8px;padding:16px 18px;border:1px solid #e8e8ee;border-radius:12px;"><b>No bypass</b><br/><span style="color:#555;">Waiting orders are locked (header and lines), cannot be cancelled or confirmed directly, and context keys cannot skip the check via RPC.</span></div>
   <div style="flex:1 1 320px;margin:8px;padding:16px 18px;border:1px solid #e8e8ee;border-radius:12px;"><b>Approvers who see only their own orders</b><br/><span style="color:#555;">A record rule gives them access to the orders waiting for them.</span></div>
   <div style="flex:1 1 320px;margin:8px;padding:16px 18px;border:1px solid #e8e8ee;border-radius:12px;"><b>Resubmission</b><br/><span style="color:#555;">Withdrawn or rejected orders can be resubmitted; each attempt is a new approval round with full history.</span></div>
@@ -176,14 +177,14 @@
 <h2 style="font-size:28px;font-weight:700;margin:40px 0 6px;color:#2b2b33;">Technical details</h2>
 <table style="width:100%;border-collapse:collapse;font-size:15px;">
   <tbody>
-    <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 14px;width:240px;color:#777;">Odoo version</td><td style="padding:10px 14px;">17.0, Community and Enterprise</td></tr>
+    <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 14px;width:240px;color:#777;">Odoo version</td><td style="padding:10px 14px;">18.0, Community and Enterprise</td></tr>
     <tr style="border-bottom:1px solid #eee;background:#fafafa;"><td style="padding:10px 14px;width:240px;color:#777;">Depends on</td><td style="padding:10px 14px;"><code>sale_management</code>, <code>account</code></td></tr>
     <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 14px;width:240px;color:#777;">Python dependency</td><td style="padding:10px 14px;">None</td></tr>
     <tr style="border-bottom:1px solid #eee;background:#fafafa;"><td style="padding:10px 14px;width:240px;color:#777;">Menus</td><td style="padding:10px 14px;">Sales &rsaquo; Orders &rsaquo; Orders to Approve</td></tr>
     <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 14px;width:240px;color:#777;">Settings</td><td style="padding:10px 14px;">Sales &rsaquo; Configuration &rsaquo; Settings &rsaquo; Credit Limit Control</td></tr>
     <tr style="border-bottom:1px solid #eee;background:#fafafa;"><td style="padding:10px 14px;width:240px;color:#777;">Models</td><td style="padding:10px 14px;">New: <code>acla.team.approver</code>, <code>acla.sale.approval.line</code>, <code>acla.reject.wizard</code>. Extended: <code>res.partner</code>, <code>sale.order</code>, <code>sale.order.line</code>, <code>crm.team</code>, <code>account.move</code>, <code>res.company</code></td></tr>
     <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 14px;width:240px;color:#777;">Data</td><td style="padding:10px 14px;">Blacklisted tag, 2 activity types, 3 e-mail templates, daily scheduled action</td></tr>
-    <tr style="border-bottom:1px solid #eee;background:#fafafa;"><td style="padding:10px 14px;width:240px;color:#777;">Automated tests</td><td style="padding:10px 14px;">38 TransactionCase tests: exposure calculation (AR, un-invoiced, draft payments, credit notes, contacts, companies), live status, breach actions and activities, blacklist policies, increases on confirmed orders, limit validation, strict sequential approval, rejection, withdrawal and bypass protection</td></tr>
+    <tr style="border-bottom:1px solid #eee;background:#fafafa;"><td style="padding:10px 14px;width:240px;color:#777;">Automated tests</td><td style="padding:10px 14px;">40 TransactionCase tests: exposure calculation (AR, un-invoiced, draft payments, credit notes, contacts, companies), live status, breach actions and activities, blacklist policies, increases on confirmed orders, In Process payments without journal entries, limit validation, strict sequential approval, rejection, withdrawal and bypass protection</td></tr>
     <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 14px;width:240px;color:#777;">Languages</td><td style="padding:10px 14px;">English, Arabic (ar_001) with RTL support</td></tr>
     <tr style="border-bottom:1px solid #eee;background:#fafafa;"><td style="padding:10px 14px;width:240px;color:#777;">License</td><td style="padding:10px 14px;">LGPL-3</td></tr>
   </tbody>

@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 17.0\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-11-05 00:00+0000\n"
 "PO-Revision-Date: 2026-11-05 00:00+0000\n"
@@ -304,6 +304,16 @@ msgstr "عملة الشركة"
 #: model_terms:ir.ui.view,arch_db:advanced_credit_limit_approval.res_config_settings_view_form_acla
 msgid "Compute the real-time credit exposure of customers and enforce their Warning and Blocking amounts"
 msgstr "احتساب التعرض الائتماني للعملاء لحظياً وتطبيق مبالغ التحذير والحظر الخاصة بهم"
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields,help:advanced_credit_limit_approval.field_res_partner__acla_unbooked_payment_amount
+msgid "Confirmed customer payments (\"In Process\") that have no journal entry yet because their payment method has no outstanding account. They are deducted from the exposure until they are matched with the bank."
+msgstr "مدفوعات العملاء المؤكدة (\"قيد المعالجة\") التي ليس لها قيد يومية بعد لأن طريقة الدفع الخاصة بها ليس لها حساب معلّق. تُخصم من التعرض الائتماني إلى أن تتم مطابقتها مع البنك."
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields,field_description:advanced_credit_limit_approval.field_res_partner__acla_unbooked_payment_amount
+msgid "Confirmed Payments Not Yet Booked"
+msgstr "مدفوعات مؤكدة لم تُقيَّد بعد"
 
 #. module: advanced_credit_limit_approval
 #: model:mail.activity.type,name:advanced_credit_limit_approval.mail_act_credit_approval

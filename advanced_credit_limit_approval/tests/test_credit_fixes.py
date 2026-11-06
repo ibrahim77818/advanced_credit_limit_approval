@@ -145,3 +145,47 @@ class TestCreditFixes(AclaTestCommon):
         self.customer.write({'acla_blocking_amount': 0.0, 'acla_warning_amount': 3000.0})
         self.customer.write({'acla_blocking_amount': 3000.0})
         self.assertEqual(self.customer.acla_blocking_amount, 3000.0)
+
+    # ------------------------------------------------------------------
+    # v18: confirmed payments without a journal entry
+    # ------------------------------------------------------------------
+    def test_11_in_process_payment_without_entry_reduces_exposure(self):
+        self._post_invoice(self.customer, 2500.0)
+        self.assertEqual(self.customer.acla_credit_state, 'blocked')
+        # payment method without outstanding account: no journal entry on confirm
+        self.inbound_payment_method_line.payment_account_id = False
+        payment = self.env['account.payment'].create({
+            'payment_type': 'inbound',
+            'partner_type': 'customer',
+            'partner_id': self.customer.id,
+            'amount': 1000.0,
+            'journal_id': self.company_data['default_journal_bank'].id,
+            'payment_method_line_id': self.inbound_payment_method_line.id,
+        })
+        self.customer.invalidate_recordset()
+        self.assertAlmostEqual(self.customer.acla_exposure_amount, 2500.0, msg='draft: not deducted')
+        payment.action_post()
+        self.assertEqual(payment.state, 'in_process')
+        self.assertFalse(payment.move_id)
+        self.customer.invalidate_recordset()
+        self.assertAlmostEqual(self.customer.acla_ar_amount, 2500.0)
+        self.assertAlmostEqual(self.customer.acla_unbooked_payment_amount, 1000.0)
+        self.assertAlmostEqual(self.customer.acla_exposure_amount, 1500.0)
+        self.assertEqual(self.customer.acla_credit_status, 'warning')
+
+    def test_12_in_process_payment_with_entry_not_counted_twice(self):
+        self._post_invoice(self.customer, 2500.0)
+        payment = self.env['account.payment'].create({
+            'payment_type': 'inbound',
+            'partner_type': 'customer',
+            'partner_id': self.customer.id,
+            'amount': 1000.0,
+            'journal_id': self.company_data['default_journal_bank'].id,
+            'payment_method_line_id': self.inbound_payment_method_line.id,
+        })
+        payment.action_post()
+        self.assertTrue(payment.move_id)
+        self.customer.invalidate_recordset()
+        self.assertAlmostEqual(self.customer.acla_unbooked_payment_amount, 0.0)
+        self.assertAlmostEqual(self.customer.acla_ar_amount, 1500.0)
+        self.assertAlmostEqual(self.customer.acla_exposure_amount, 1500.0)
