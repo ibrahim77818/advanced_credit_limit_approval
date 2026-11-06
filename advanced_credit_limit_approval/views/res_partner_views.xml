@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_partner_form_acla" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.acla</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_acla_evaluate_credit" type="object" class="oe_stat_button"
+                        icon="fa-shield"
+                        groups="sales_team.group_sale_salesman,account.group_account_invoice"
+                        attrs="{'invisible': [('acla_tracking_enabled', '=', False)]}">
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_value">
+                            <field name="acla_exposure_amount" widget="monetary"
+                                   options="{'currency_field': 'acla_currency_id'}"/>
+                        </span>
+                        <span class="o_stat_text">Credit Exposure</span>
+                    </div>
+                </button>
+            </xpath>
+            <xpath expr="//widget[@name='web_ribbon']" position="after">
+                <field name="acla_tracking_enabled" invisible="1"/>
+                <field name="acla_is_blacklisted" invisible="1"/>
+                <field name="acla_credit_status" invisible="1"/>
+                <field name="acla_currency_id" invisible="1"/>
+                <field name="acla_can_edit_limits" invisible="1"/>
+                <field name="acla_deduct_draft_payments" invisible="1"/>
+                <widget name="web_ribbon" title="Blacklisted" bg_color="bg-dark"
+                        attrs="{'invisible': [('acla_is_blacklisted', '=', False)]}"/>
+                <widget name="web_ribbon" title="Credit Warning" bg_color="bg-warning"
+                        attrs="{'invisible': ['|', '|', ('acla_tracking_enabled', '=', False), ('acla_is_blacklisted', '=', True), ('acla_credit_status', '!=', 'warning')]}"/>
+            </xpath>
+            <xpath expr="//page[@name='sales_purchases']" position="after">
+                <page string="Credit Control" name="acla_credit_control"
+                      groups="sales_team.group_sale_salesman,account.group_account_invoice"
+                      attrs="{'invisible': [('acla_tracking_enabled', '=', False)]}">
+                    <div class="alert alert-info o_acla_banner" role="alert"
+                         attrs="{'invisible': ['|', ('is_company', '=', True), ('parent_id', '=', False)]}">
+                        Credit limits and exposure are managed on the parent company.
+                    </div>
+                    <group>
+                        <group string="Limits" name="acla_limits">
+                            <field name="acla_warning_amount" attrs="{'readonly': ['|', ('acla_can_edit_limits', '=', False), ('parent_id', '!=', False)]}"
+                                   widget="monetary" options="{'currency_field': 'acla_currency_id'}"/>
+                            <field name="acla_blocking_amount" attrs="{'readonly': ['|', ('acla_can_edit_limits', '=', False), ('parent_id', '!=', False)]}"
+                                   widget="monetary" options="{'currency_field': 'acla_currency_id'}"/>
+                            <field name="acla_credit_status" widget="badge"
+                                   decoration-success="acla_credit_status == 'normal'"
+                                   decoration-warning="acla_credit_status == 'warning'"
+                                   decoration-danger="acla_credit_status == 'blocked'"/>
+                        </group>
+                        <group string="Real-time Exposure" name="acla_exposure">
+                            <field name="acla_ar_amount"/>
+                            <field name="acla_uninvoiced_amount"/>
+                            <field name="acla_draft_payment_amount"
+                                   attrs="{'invisible': [('acla_deduct_draft_payments', '=', False)]}"/>
+                            <field name="acla_exposure_amount" class="fw-bold"/>
+                            <field name="acla_available_amount"
+                                   attrs="{'invisible': [('acla_blocking_amount', '=', 0)]}"/>
+                        </group>
+                    </group>
+                    <button name="action_acla_evaluate_credit" type="object" class="btn-secondary"
+                            icon="fa-refresh" string="Re-evaluate Credit Status"/>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_res_partner_filter_acla" model="ir.ui.view">
+        <field name="name">res.partner.search.inherit.acla</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='inactive']" position="before">
+                <filter string="Credit Warning" name="acla_warning"
+                        domain="[('acla_credit_state', '=', 'warning')]"/>
+                <filter string="Credit Blocked" name="acla_blocked"
+                        domain="[('acla_credit_state', '=', 'blocked')]"/>
+                <separator/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

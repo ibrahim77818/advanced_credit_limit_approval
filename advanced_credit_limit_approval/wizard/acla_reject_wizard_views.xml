@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="acla_reject_wizard_view_form" model="ir.ui.view">
+        <field name="name">acla.reject.wizard.form</field>
+        <field name="model">acla.reject.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Reject Order">
+                <field name="order_id" invisible="1"/>
+                <div class="alert alert-danger" role="alert">
+                    Rejecting cancels the sales order immediately and e-mails the customer.
+                </div>
+                <group>
+                    <field name="reason" placeholder="Explain why the credit approval is rejected..."/>
+                </group>
+                <footer>
+                    <button name="action_reject" type="object" string="Reject and Cancel Order"
+                            class="btn-danger" data-hotkey="q"/>
+                    <button string="Discard" special="cancel" class="btn-secondary" data-hotkey="z"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

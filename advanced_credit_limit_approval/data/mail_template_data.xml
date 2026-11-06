@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Warning limit breached -->
+        <record id="mail_template_credit_warning" model="mail.template">
+            <field name="name">Credit Limit: Warning Notice</field>
+            <field name="model_id" ref="base.model_res_partner"/>
+            <field name="subject">{{ object.acla_company_id.name }}: credit limit notice</field>
+            <field name="email_from">{{ (object.acla_company_id.email_formatted or user.email_formatted) }}</field>
+            <field name="partner_to">{{ object.id }}</field>
+            <field name="description">Sent automatically when a customer exceeds the credit warning amount</field>
+            <field name="body_html" type="html">
+<div style="margin: 0px; padding: 0px;" t-att-dir="'rtl' if (object.lang or '').startswith('ar') else 'ltr'">
+    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+        Dear <t t-out="object.name or ''">Customer</t>,
+        <br/><br/>
+        This is a courtesy notice that your outstanding balance with
+        <t t-out="object.acla_company_id.name or ''">YourCompany</t> has exceeded the credit warning level.
+        <br/><br/>
+        Current credit exposure: <strong t-out="format_amount(object.acla_exposure_amount, object.acla_currency_id) or ''">$ 10,000.00</strong>
+        <br/>
+        Warning level: <strong t-out="format_amount(object.commercial_partner_id.acla_warning_amount, object.acla_currency_id) or ''">$ 8,000.00</strong>
+        <br/><br/>
+        Please arrange a payment at your earliest convenience to avoid any interruption of your orders.
+        <br/><br/>
+        Do not hesitate to contact us if you have any questions.
+        <br/>
+    </p>
+</div>
+            </field>
+            <field name="lang">{{ object.lang }}</field>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+        <!-- Blocking limit breached -->
+        <record id="mail_template_credit_blocked" model="mail.template">
+            <field name="name">Credit Limit: Account on Hold</field>
+            <field name="model_id" ref="base.model_res_partner"/>
+            <field name="subject">{{ object.acla_company_id.name }}: your account is on credit hold</field>
+            <field name="email_from">{{ (object.acla_company_id.email_formatted or user.email_formatted) }}</field>
+            <field name="partner_to">{{ object.id }}</field>
+            <field name="description">Sent automatically when a customer exceeds the credit blocking amount</field>
+            <field name="body_html" type="html">
+<div style="margin: 0px; padding: 0px;" t-att-dir="'rtl' if (object.lang or '').startswith('ar') else 'ltr'">
+    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+        Dear <t t-out="object.name or ''">Customer</t>,
+        <br/><br/>
+        Your outstanding balance with
+        <t t-out="object.acla_company_id.name or ''">YourCompany</t> has exceeded your credit limit and your account has been placed on credit hold.
+        <br/><br/>
+        Current credit exposure: <strong t-out="format_amount(object.acla_exposure_amount, object.acla_currency_id) or ''">$ 12,000.00</strong>
+        <br/>
+        Credit limit: <strong t-out="format_amount(object.commercial_partner_id.acla_blocking_amount, object.acla_currency_id) or ''">$ 10,000.00</strong>
+        <br/><br/>
+        New orders will require special approval until the balance is settled. Please arrange a payment as soon as possible.
+        <br/><br/>
+        Do not hesitate to contact us if you have any questions.
+        <br/>
+    </p>
+</div>
+            </field>
+            <field name="lang">{{ object.lang }}</field>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+        <!-- Order rejected by a credit approver -->
+        <record id="mail_template_sale_credit_rejected" model="mail.template">
+            <field name="name">Sales: Order Cancelled (Credit Approval Rejected)</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="subject">{{ object.company_id.name }} Order Cancelled (Ref {{ object.name or 'n/a' }})</field>
+            <field name="email_from">{{ (object.user_id.email_formatted or object.company_id.email_formatted or user.email_formatted) }}</field>
+            <field name="partner_to">{{ object.partner_id.id }}</field>
+            <field name="description">Sent automatically to the customer when a credit approver rejects an order</field>
+            <field name="body_html" type="html">
+<div style="margin: 0px; padding: 0px;" t-att-dir="'rtl' if (object.partner_id.lang or '').startswith('ar') else 'ltr'">
+    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+        Dear <t t-out="object.partner_id.name or ''">Customer</t>,
+        <br/><br/>
+        Please be advised that your order <strong t-out="object.name or ''">S00052</strong>
+        <t t-if="object.client_order_ref">
+            (your reference: <t t-out="object.client_order_ref or ''">PO-123</t>)
+        </t>
+        has been cancelled following our credit review.
+        <t t-if="object.acla_rejection_reason">
+            <br/><br/>
+            Reason: <t t-out="object.acla_rejection_reason or ''">Outstanding balance</t>
+        </t>
+        <br/><br/>
+        You will not be charged for this order. Do not hesitate to contact us if you have any questions.
+        <br/>
+    </p>
+</div>
+            </field>
+            <field name="lang">{{ object.partner_id.lang }}</field>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+    </data>
+</odoo>

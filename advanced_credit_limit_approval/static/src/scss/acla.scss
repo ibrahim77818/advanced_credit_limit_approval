@@ -1,0 +1,16 @@
+// Advanced Credit Limit & Sequential Approval
+// Logical properties only (inline-start / inline-end) so the layout mirrors
+// automatically for right-to-left languages such as Arabic.
+
+.o_acla_banner {
+    border-inline-start: 4px solid currentColor;
+    padding-inline-start: 1rem;
+
+    > .fa {
+        margin-inline-end: 0.5rem;
+    }
+}
+
+.o_form_view .o_acla_banner .o_field_widget {
+    display: inline;
+}

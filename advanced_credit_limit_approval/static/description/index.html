@@ -1,0 +1,201 @@
+<!-- Odoo Apps description page for advanced_credit_limit_approval (Odoo 16.0). Inline styles only: apps.odoo.com strips <style> and <script> blocks. -->
+<section style="max-width:1120px;margin:0 auto;padding:0 16px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;color:#2b2b33;">
+
+<!-- ============================== HERO ============================== -->
+<div style="background:linear-gradient(120deg,#017E84 0%,#3d6b78 45%,#714B67 100%);border-radius:18px;padding:48px 40px 40px;color:#ffffff;margin-top:12px;">
+  <div style="font-size:13px;letter-spacing:2px;text-transform:uppercase;opacity:.85;margin-bottom:10px;">Sales &middot; Accounting &middot; Approvals</div>
+  <h1 style="font-size:40px;line-height:1.15;font-weight:700;margin:0 0 14px;color:#ffffff;">Advanced Credit Limit &amp; Sequential Approval</h1>
+  <p style="font-size:19px;line-height:1.55;max-width:760px;margin:0 0 24px;color:#ffffff;opacity:.95;">See every customer&rsquo;s real credit exposure the moment it changes, warn and blacklist automatically when limits are breached, and route risky orders through a strict, tier-by-tier Sales Team approval chain.</p>
+  <div>
+    <span style="display:inline-block;border:1px solid rgba(255,255,255,.7);border-radius:20px;padding:6px 14px;margin:0 8px 8px 0;font-size:14px;">Odoo 16.0</span>
+    <span style="display:inline-block;border:1px solid rgba(255,255,255,.7);border-radius:20px;padding:6px 14px;margin:0 8px 8px 0;font-size:14px;">Community &amp; Enterprise</span>
+    <span style="display:inline-block;border:1px solid rgba(255,255,255,.7);border-radius:20px;padding:6px 14px;margin:0 8px 8px 0;font-size:14px;">38 automated tests</span>
+    <span style="display:inline-block;border:1px solid rgba(255,255,255,.7);border-radius:20px;padding:6px 14px;margin:0 8px 8px 0;font-size:14px;">Arabic (ar_001) &amp; RTL</span>
+    <span style="display:inline-block;border:1px solid rgba(255,255,255,.7);border-radius:20px;padding:6px 14px;margin:0 8px 8px 0;font-size:14px;">Technical name: advanced_credit_limit_approval</span>
+    <span style="display:inline-block;border:1px solid rgba(255,255,255,.7);border-radius:20px;padding:6px 14px;margin:0 8px 8px 0;font-size:14px;">LGPL-3</span>
+  </div>
+</div>
+
+<!-- ============================== KEY NUMBERS ============================== -->
+<div style="display:flex;flex-wrap:wrap;margin:28px -8px 8px;">
+  <div style="flex:1 1 220px;margin:8px;background:#f6f4f6;border-radius:14px;padding:20px 22px;"><div style="font-size:30px;font-weight:700;color:#714B67;">3 sources</div><div style="font-size:15px;color:#555;">Receivables + un-invoiced sales, optionally net of draft payments, in real time</div></div>
+  <div style="flex:1 1 220px;margin:8px;background:#eef6f6;border-radius:14px;padding:20px 22px;"><div style="font-size:30px;font-weight:700;color:#017E84;">2 limits</div><div style="font-size:15px;color:#555;">Warning and Blocking amounts per customer and company</div></div>
+  <div style="flex:1 1 220px;margin:8px;background:#f6f4f6;border-radius:14px;padding:20px 22px;"><div style="font-size:30px;font-weight:700;color:#714B67;">N tiers</div><div style="font-size:15px;color:#555;">Approvers per Sales Team, enforced strictly in sequence</div></div>
+  <div style="flex:1 1 220px;margin:8px;background:#eef6f6;border-radius:14px;padding:20px 22px;"><div style="font-size:30px;font-weight:700;color:#017E84;">3 actions</div><div style="font-size:15px;color:#555;">Automatic e-mail, chatter log and salesperson activity on every breach</div></div>
+</div>
+
+<!-- ============================== WHY ============================== -->
+<h2 style="font-size:28px;font-weight:700;margin:40px 0 6px;color:#2b2b33;">Why this module</h2>
+<p style="font-size:16px;color:#555;margin:0 0 18px;">Credit control fails when exposure is only known at month end and anyone can confirm an order. This module makes exposure live and puts the right people in the confirmation path.</p>
+<div style="display:flex;flex-wrap:wrap;margin:0 -10px;">
+  <div style="flex:1 1 440px;margin:10px;border:1px solid #f1d6d6;background:#fff8f8;border-radius:14px;padding:24px 26px;">
+    <h3 style="font-size:19px;font-weight:700;color:#b33939;margin:0 0 12px;">In standard Odoo 16</h3>
+    <ul style="font-size:15px;line-height:1.65;margin:0;padding-left:20px;color:#3a3a42;">
+      <li>The credit limit is a <b>single amount</b> that only shows a warning; nothing is blocked.</li>
+      <li>There is <b>no automatic follow-up</b>: no customer e-mail, no task for the salesperson.</li>
+      <li>Nothing marks a risky customer <b>visibly</b> on the customer form.</li>
+      <li>Any salesperson can <b>confirm an over-limit order</b> directly.</li>
+      <li>There is <b>no approval chain</b> for sales orders out of the box.</li>
+      <li>Rejected deals have <b>no audit trail</b> or customer notification.</li>
+    </ul>
+  </div>
+  <div style="flex:1 1 440px;margin:10px;border:1px solid #cfe7e7;background:#f4fbfb;border-radius:14px;padding:24px 26px;">
+    <h3 style="font-size:19px;font-weight:700;color:#017E84;margin:0 0 12px;">With this module</h3>
+    <ul style="font-size:15px;line-height:1.65;margin:0;padding-left:20px;color:#3a3a42;">
+      <li>Separate, validated <b>Warning</b> and <b>Blocking</b> amounts, evaluated against live exposure.</li>
+      <li>Every breach <b>e-mails the customer</b>, logs the event and creates a <b>Credit Limit Follow-Up</b> activity.</li>
+      <li>Blocked customers get the <b>Blacklisted</b> tag and a <b>black ribbon</b>; salespeople are alerted when they pick them.</li>
+      <li>Over-limit orders go to <b>Waiting Approval</b>, and confirmed orders cannot be enlarged past the limit.</li>
+      <li>Approvers are defined per <b>Sales Team</b> and must act <b>in sequence</b>, each on their own tier.</li>
+      <li>Rejection <b>cancels</b> the order, records the reason and <b>e-mails the customer</b>.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============================== HOW IT WORKS ============================== -->
+<h2 style="font-size:28px;font-weight:700;margin:40px 0 6px;color:#2b2b33;">How it works</h2>
+<p style="font-size:16px;color:#555;margin:0 0 18px;">Four steps from setup to a controlled confirmation.</p>
+<div style="display:flex;flex-wrap:wrap;margin:0 -8px;">
+  <div style="flex:1 1 200px;margin:8px;border-radius:12px;border:1px solid #e3dde2;padding:18px;"><div style="width:34px;height:34px;border-radius:50%;background:#714B67;color:#fff;font-weight:700;text-align:center;line-height:34px;margin-bottom:10px;">1</div><div style="font-weight:700;margin-bottom:4px;">Enable</div><div style="font-size:14px;color:#555;">Turn on <b>Credit Limit Tracking</b> in Sales settings and pick the blacklist policy.</div></div>
+  <div style="flex:1 1 200px;margin:8px;border-radius:12px;border:1px solid #e3dde2;padding:18px;"><div style="width:34px;height:34px;border-radius:50%;background:#714B67;color:#fff;font-weight:700;text-align:center;line-height:34px;margin-bottom:10px;">2</div><div style="font-weight:700;margin-bottom:4px;">Configure</div><div style="font-size:14px;color:#555;">Add approvers to each Sales Team and set Warning / Blocking amounts on customers.</div></div>
+  <div style="flex:1 1 200px;margin:8px;border-radius:12px;border:1px solid #e3dde2;padding:18px;"><div style="width:34px;height:34px;border-radius:50%;background:#714B67;color:#fff;font-weight:700;text-align:center;line-height:34px;margin-bottom:10px;">3</div><div style="font-weight:700;margin-bottom:4px;">Monitor</div><div style="font-size:14px;color:#555;">Exposure and status update on every confirmation, order change, cancellation, invoice, payment and limit change.</div></div>
+  <div style="flex:1 1 200px;margin:8px;border-radius:12px;border:1px solid #cfe7e7;background:#f4fbfb;padding:18px;"><div style="width:34px;height:34px;border-radius:50%;background:#017E84;color:#fff;font-weight:700;text-align:center;line-height:34px;margin-bottom:10px;">4</div><div style="font-weight:700;margin-bottom:4px;">Approve</div><div style="font-size:14px;color:#555;">Risky orders wait for each tier; the last approval confirms, a rejection cancels.</div></div>
+</div>
+
+<!-- ============================== FEATURES ============================== -->
+<h2 style="font-size:28px;font-weight:700;margin:40px 0 6px;color:#2b2b33;">Features</h2>
+<p style="font-size:16px;color:#555;margin:0 0 6px;">Screens below use demo data: customer <b>Al Noor Trading Co.</b> (Warning SR&nbsp;30,000, Blocking SR&nbsp;50,000), Sales Team <b>Riyadh Sales</b> with approvers Sara Al-Qahtani &rsaquo; Omar Haddad &rsaquo; Mitchell Admin, and quotation <b>S00042</b> for SR&nbsp;14,812.</p>
+
+<div style="margin:44px 0 0;">
+  <div style="font-size:13px;font-weight:700;color:#017E84;letter-spacing:1px;text-transform:uppercase;">Menus</div>
+  <h3 style="font-size:23px;font-weight:700;margin:4px 0 8px;">Everything where your team already works</h3>
+  <ul style="font-size:15px;line-height:1.75;color:#555;margin:0;padding-left:20px;">
+    <li><b>Sales &rsaquo; Configuration &rsaquo; Settings &rsaquo; Credit Limit Control</b> &ndash; switch, blacklist policy, auto-lift.</li>
+    <li><b>Sales &rsaquo; Configuration &rsaquo; Sales Teams &rsaquo; Approvers</b> tab &ndash; approval sequence.</li>
+    <li><b>Customer form &rsaquo; Credit Control</b> tab and <b>Credit Exposure</b> smart button.</li>
+    <li><b>Sales &rsaquo; Orders &rsaquo; Orders to Approve</b> &ndash; queue filtered on <b>My Credit Approvals</b>.</li>
+    <li>Search filters <b>Waiting Credit Approval</b>, <b>My Credit Approvals</b> (orders) and <b>Credit Warning</b>, <b>Credit Blocked</b> (customers).</li>
+  </ul>
+</div>
+
+<div style="margin:44px 0 0;">
+  <div style="font-size:13px;font-weight:700;color:#017E84;letter-spacing:1px;text-transform:uppercase;">Feature 1</div>
+  <h3 style="font-size:23px;font-weight:700;margin:4px 0 8px;">One switch, one policy, per company</h3>
+  <p style="font-size:15px;line-height:1.6;color:#555;margin:0 0 14px;">Enable <b>Credit Limit Tracking</b> (off by default) and choose the <b>Blacklisted Customer Policy</b>: <b>Hard Block</b> prevents sales orders for blacklisted customers, <b>Force Approval</b> allows quotations but always routes their confirmation through approvers. <b>Deduct Draft Payments</b> (off by default) decides whether unposted customer payments free up credit. <b>Auto-lift Blacklist</b> removes the tag once the exposure recovers &ndash; only when the module applied it.</p>
+  <img src="acla_01_settings.png" alt="Sales settings with the Credit Limit Control section" style="width:100%;max-width:1000px;border:1px solid #e1e1e6;border-radius:10px;box-shadow:0 6px 24px rgba(30,30,60,.10);"/>
+</div>
+
+<div style="margin:44px 0 0;">
+  <div style="font-size:13px;font-weight:700;color:#017E84;letter-spacing:1px;text-transform:uppercase;">Feature 2</div>
+  <h3 style="font-size:23px;font-weight:700;margin:4px 0 8px;">Real-time exposure, consolidated on the company</h3>
+  <p style="font-size:15px;line-height:1.6;color:#555;margin:0 0 14px;">The <b>Credit Control</b> tab shows <b>Posted Receivables</b>, <b>Un-invoiced Confirmed Sales</b>, <b>Draft Customer Payments</b> (when deducted), the resulting <b>Credit Exposure</b>, the amount <b>Available Before Blocking</b> and a <b>Credit Status</b> computed live from the current figures. Limits are validated: no negative amounts, and the warning amount cannot exceed the blocking amount. Orders and invoices of every contact roll up to the commercial entity. On a blocking breach the customer receives the <b>Blacklisted</b> tag and a black ribbon; the chatter keeps the notification e-mails and the breach notes, and the salesperson gets a <b>Credit Limit Follow-Up</b> activity.</p>
+  <img src="acla_03_customer_blacklisted.png" alt="Blacklisted customer with black ribbon, credit control tab and chatter" style="width:100%;border:1px solid #e1e1e6;border-radius:10px;box-shadow:0 6px 24px rgba(30,30,60,.10);"/>
+  <div style="background:#f4fbfb;border-left:4px solid #017E84;border-radius:8px;padding:16px 20px;font-size:15px;line-height:1.6;margin-top:14px;"><b>Formula:</b> Exposure = open posted receivables + un-invoiced part of confirmed orders (tax included, net of posted invoices and credit notes) &minus; draft customer payments <i>(only with Deduct Draft Payments)</i>.<br/><b>Example (demo company deducts draft payments):</b> SR&nbsp;41,200 + SR&nbsp;18,650 &minus; SR&nbsp;2,500 = <b>SR&nbsp;57,350</b> &gt; Blocking SR&nbsp;50,000 &rArr; status <b>Blocked</b>.</div>
+</div>
+
+<div style="margin:44px 0 0;">
+  <div style="font-size:13px;font-weight:700;color:#017E84;letter-spacing:1px;text-transform:uppercase;">Feature 3</div>
+  <h3 style="font-size:23px;font-weight:700;margin:4px 0 8px;">Salespeople are warned the moment they pick a blacklisted customer</h3>
+  <p style="font-size:15px;line-height:1.6;color:#555;margin:0 0 14px;">Selecting a blacklisted customer (or any of its contacts) on a quotation opens a <b>Blacklisted Customer</b> alert and keeps a red banner on the form. With <b>Hard Block</b> the quotation cannot be saved at all.</p>
+  <img src="acla_04_blacklisted_alert.png" alt="Blacklisted customer alert on a new quotation" style="width:100%;border:1px solid #e1e1e6;border-radius:10px;box-shadow:0 6px 24px rgba(30,30,60,.10);"/>
+</div>
+
+<div style="margin:44px 0 0;">
+  <div style="font-size:13px;font-weight:700;color:#017E84;letter-spacing:1px;text-transform:uppercase;">Feature 4</div>
+  <h3 style="font-size:23px;font-weight:700;margin:4px 0 8px;">A strict approval sequence per Sales Team</h3>
+  <p style="font-size:15px;line-height:1.6;color:#555;margin:0 0 14px;">The <b>Approvers</b> tab of a Sales Team lists users in order; drag to reorder. Each user can appear once, and only internal users with Sales access are accepted.</p>
+  <img src="acla_02_team_approvers.png" alt="Sales Team Approvers tab with three tiers" style="width:100%;max-width:1000px;border:1px solid #e1e1e6;border-radius:10px;box-shadow:0 6px 24px rgba(30,30,60,.10);"/>
+</div>
+
+<div style="margin:44px 0 0;">
+  <div style="font-size:13px;font-weight:700;color:#017E84;letter-spacing:1px;text-transform:uppercase;">Feature 5</div>
+  <h3 style="font-size:23px;font-weight:700;margin:4px 0 8px;">Waiting Approval instead of a blind confirmation</h3>
+  <p style="font-size:15px;line-height:1.6;color:#555;margin:0 0 14px;">When the projected exposure (current exposure + this order) exceeds the Blocking amount, or the customer is blacklisted under Force Approval, <b>Confirm</b> moves the order to <b>Waiting Approval</b>. Only the current tier sees <b>Approve</b> and <b>Reject</b>; others get an access error even through the API. Each approval is logged and hands over to the next tier with a <b>Credit Approval</b> activity; the last one confirms the order. The salesperson or a Sales Administrator can <b>Withdraw from Approval</b>.</p>
+  <img src="acla_05_waiting_approval.png" alt="Sales order waiting for tier 2 approval" style="width:100%;margin-bottom:22px;border:1px solid #e1e1e6;border-radius:10px;box-shadow:0 6px 24px rgba(30,30,60,.10);"/>
+  <img src="acla_07_orders_to_approve.png" alt="Orders to Approve list filtered on My Credit Approvals" style="width:100%;border:1px solid #e1e1e6;border-radius:10px;box-shadow:0 6px 24px rgba(30,30,60,.10);"/>
+  <div style="font-size:13px;color:#777;margin:6px 0 0;">Sales &rsaquo; Orders &rsaquo; Orders to Approve opens on the current user&rsquo;s queue.</div>
+</div>
+
+<div style="margin:44px 0 0;">
+  <div style="font-size:13px;font-weight:700;color:#017E84;letter-spacing:1px;text-transform:uppercase;">Feature 6</div>
+  <h3 style="font-size:23px;font-weight:700;margin:4px 0 8px;">Reject with a reason &ndash; the customer is informed</h3>
+  <p style="font-size:15px;line-height:1.6;color:#555;margin:0 0 14px;"><b>Reject</b> asks for a <b>Rejection Reason</b>, cancels the order immediately, cancels the remaining tiers, logs the rejection in the chatter and e-mails the customer a cancellation notice including the reason.</p>
+  <img src="acla_06_reject_wizard.png" alt="Reject Order dialog with rejection reason" style="width:100%;margin-bottom:22px;border:1px solid #e1e1e6;border-radius:10px;box-shadow:0 6px 24px rgba(30,30,60,.10);"/>
+  <img src="acla_08_rejected_cancelled.png" alt="Cancelled order with approval history and customer e-mail" style="width:100%;border:1px solid #e1e1e6;border-radius:10px;box-shadow:0 6px 24px rgba(30,30,60,.10);"/>
+</div>
+
+<div style="margin:44px 0 0;">
+  <div style="font-size:13px;font-weight:700;color:#017E84;letter-spacing:1px;text-transform:uppercase;">Feature 7</div>
+  <h3 style="font-size:23px;font-weight:700;margin:4px 0 8px;">Fully translated to Arabic, right-to-left</h3>
+  <p style="font-size:15px;line-height:1.6;color:#555;margin:0 0 14px;">All labels, messages, activities and the three e-mail templates are translated (<b>ar_001</b>). Styles use logical properties so banners and ribbons mirror correctly, and e-mails switch to RTL for Arabic-speaking customers.</p>
+  <img src="acla_09_arabic_rtl.png" alt="Waiting approval order in Arabic" style="width:100%;margin-bottom:22px;border:1px solid #e1e1e6;border-radius:10px;box-shadow:0 6px 24px rgba(30,30,60,.10);"/>
+  <img src="acla_10_arabic_customer.png" alt="Blacklisted customer in Arabic with credit control tab" style="width:100%;border:1px solid #e1e1e6;border-radius:10px;box-shadow:0 6px 24px rgba(30,30,60,.10);"/>
+</div>
+
+<!-- ============================== CREDIT STATUSES ============================== -->
+<h2 style="font-size:28px;font-weight:700;margin:40px 0 6px;color:#2b2b33;">Credit statuses</h2>
+<p style="font-size:16px;color:#555;margin:0 0 18px;">The displayed status is computed live. Breach actions run on order confirmation, changes to confirmed orders, cancellation, invoice and payment posting, reset to draft, limit changes, a daily scheduled action and the <b>Re-evaluate Credit Status</b> button.</p>
+<div style="margin-bottom:6px;"><span style="display:inline-block;min-width:150px;text-align:center;background:#d1fae5;color:#047857;border-radius:10px;padding:1px 8px;font-size:13px;margin-right:10px;">Normal</span> exposure &le; Warning amount (or no limits set)</div>
+<div style="margin-bottom:6px;"><span style="display:inline-block;min-width:150px;text-align:center;background:#fef3c7;color:#b45309;border-radius:10px;padding:1px 8px;font-size:13px;margin-right:10px;">Warning</span> exposure &gt; Warning amount &rArr; e-mail, chatter note, follow-up activity, amber ribbon</div>
+<div style="margin-bottom:6px;"><span style="display:inline-block;min-width:150px;text-align:center;background:#fee2e2;color:#b91c1c;border-radius:10px;padding:1px 8px;font-size:13px;margin-right:10px;">Blocked</span> exposure &gt; Blocking amount &rArr; warning actions + <b>Blacklisted</b> tag + black ribbon</div>
+<div style="background:#f4fbfb;border-left:4px solid #017E84;border-radius:8px;padding:16px 20px;font-size:15px;line-height:1.6;margin-top:14px;"><b>No noise:</b> actions fire only when the status gets worse. Moving from Warning to Blocked updates the existing follow-up activity instead of creating a second one; an improvement is simply logged.</div>
+
+<!-- ============================== CORNER CASES ============================== -->
+<h2 style="font-size:28px;font-weight:700;margin:40px 0 6px;color:#2b2b33;">Built for real-world corner cases</h2>
+<p style="font-size:16px;color:#555;margin:0 0 18px;">Covered by the code and its automated tests.</p>
+<div style="display:flex;flex-wrap:wrap;margin:0 -8px;font-size:15px;line-height:1.55;">
+  <div style="flex:1 1 320px;margin:8px;padding:16px 18px;border:1px solid #e8e8ee;border-radius:12px;"><b>Contacts of a company</b><br/><span style="color:#555;">Limits, exposure and blacklist live on the commercial entity and apply to every contact.</span></div>
+  <div style="flex:1 1 320px;margin:8px;padding:16px 18px;border:1px solid #e8e8ee;border-radius:12px;"><b>Multi-company</b><br/><span style="color:#555;">Settings, limits, status and exposure are per company; approval records follow company rules.</span></div>
+  <div style="flex:1 1 320px;margin:8px;padding:16px 18px;border:1px solid #e8e8ee;border-radius:12px;"><b>Multi-currency</b><br/><span style="color:#555;">Orders and invoices in foreign currencies are converted to company currency.</span></div>
+  <div style="flex:1 1 320px;margin:8px;padding:16px 18px;border:1px solid #e8e8ee;border-radius:12px;"><b>Draft invoices and credit notes</b><br/><span style="color:#555;">Draft invoices stay in un-invoiced sales; posted credit notes linked to an order reopen its un-invoiced amount.</span></div>
+  <div style="flex:1 1 320px;margin:8px;padding:16px 18px;border:1px solid #e8e8ee;border-radius:12px;"><b>Raising a confirmed order</b><br/><span style="color:#555;">Adding lines or raising quantities/prices on a confirmed order is refused when the new exposure exceeds the blocking amount or the customer is blacklisted; the extra goes on a new quotation for approval. Down payments and re-invoiced expenses are not blocked.</span></div>
+  <div style="flex:1 1 320px;margin:8px;padding:16px 18px;border:1px solid #e8e8ee;border-radius:12px;"><b>Unconfirmed payments</b><br/><span style="color:#555;">Draft payments do not free up credit unless the company enables <b>Deduct Draft Payments</b>, so a draft cannot unblock a customer.</span></div>
+  <div style="flex:1 1 320px;margin:8px;padding:16px 18px;border:1px solid #e8e8ee;border-radius:12px;"><b>No bypass</b><br/><span style="color:#555;">Waiting orders are locked (header and lines), cannot be cancelled or confirmed directly, and context keys cannot skip the check via RPC.</span></div>
+  <div style="flex:1 1 320px;margin:8px;padding:16px 18px;border:1px solid #e8e8ee;border-radius:12px;"><b>Approvers who see only their own orders</b><br/><span style="color:#555;">A record rule gives them access to the orders waiting for them.</span></div>
+  <div style="flex:1 1 320px;margin:8px;padding:16px 18px;border:1px solid #e8e8ee;border-radius:12px;"><b>Resubmission</b><br/><span style="color:#555;">Withdrawn or rejected orders can be resubmitted; each attempt is a new approval round with full history.</span></div>
+  <div style="flex:1 1 320px;margin:8px;padding:16px 18px;border:1px solid #e8e8ee;border-radius:12px;"><b>Batch confirmation</b><br/><span style="color:#555;">Confirming several orders at once confirms those within limits and sends the others to approval.</span></div>
+  <div style="flex:1 1 320px;margin:8px;padding:16px 18px;border:1px solid #e8e8ee;border-radius:12px;"><b>Missing data</b><br/><span style="color:#555;">No customer e-mail is logged in the chatter; no salesperson falls back to the order&rsquo;s salesperson; a team without approvers blocks with a clear message.</span></div>
+</div>
+
+<!-- ============================== SECURITY ============================== -->
+<h2 style="font-size:28px;font-weight:700;margin:40px 0 6px;color:#2b2b33;">Security</h2>
+<p style="font-size:16px;color:#555;margin:0 0 18px;">Uses the standard Sales and Accounting groups.</p>
+<table style="width:100%;border-collapse:collapse;font-size:15px;">
+  <thead><tr style="background:#714B67;color:#fff;"><th style="text-align:left;padding:10px 14px;">Who</th><th style="text-align:left;padding:10px 14px;">Can</th></tr></thead>
+  <tbody>
+    <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 14px;">Sales / User</td><td style="padding:10px 14px;">See exposure and status, read team approvers, submit orders, withdraw their own orders</td></tr>
+    <tr style="border-bottom:1px solid #eee;background:#fafafa;"><td style="padding:10px 14px;">Current approver</td><td style="padding:10px 14px;">Approve or reject only their own tier; read/write access to orders waiting for them</td></tr>
+    <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 14px;">Sales / Administrator</td><td style="padding:10px 14px;">Edit credit limits, manage Sales Team approvers, withdraw any waiting order</td></tr>
+    <tr style="border-bottom:1px solid #eee;background:#fafafa;"><td style="padding:10px 14px;">Accounting / Advisor</td><td style="padding:10px 14px;">Edit credit limits; Invoicing users can read approval steps</td></tr>
+    <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 14px;">Everyone</td><td style="padding:10px 14px;">Approval steps are read-only; they change only through Approve, Reject and Withdraw</td></tr>
+    <tr style="border-bottom:1px solid #eee;background:#fafafa;"><td style="padding:10px 14px;">Multi-company</td><td style="padding:10px 14px;">Approvers and approval steps are restricted to the allowed companies</td></tr>
+  </tbody>
+</table>
+
+<!-- ============================== TECHNICAL ============================== -->
+<h2 style="font-size:28px;font-weight:700;margin:40px 0 6px;color:#2b2b33;">Technical details</h2>
+<table style="width:100%;border-collapse:collapse;font-size:15px;">
+  <tbody>
+    <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 14px;width:240px;color:#777;">Odoo version</td><td style="padding:10px 14px;">16.0, Community and Enterprise</td></tr>
+    <tr style="border-bottom:1px solid #eee;background:#fafafa;"><td style="padding:10px 14px;width:240px;color:#777;">Depends on</td><td style="padding:10px 14px;"><code>sale_management</code>, <code>account</code></td></tr>
+    <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 14px;width:240px;color:#777;">Python dependency</td><td style="padding:10px 14px;">None</td></tr>
+    <tr style="border-bottom:1px solid #eee;background:#fafafa;"><td style="padding:10px 14px;width:240px;color:#777;">Menus</td><td style="padding:10px 14px;">Sales &rsaquo; Orders &rsaquo; Orders to Approve</td></tr>
+    <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 14px;width:240px;color:#777;">Settings</td><td style="padding:10px 14px;">Sales &rsaquo; Configuration &rsaquo; Settings &rsaquo; Credit Limit Control</td></tr>
+    <tr style="border-bottom:1px solid #eee;background:#fafafa;"><td style="padding:10px 14px;width:240px;color:#777;">Models</td><td style="padding:10px 14px;">New: <code>acla.team.approver</code>, <code>acla.sale.approval.line</code>, <code>acla.reject.wizard</code>. Extended: <code>res.partner</code>, <code>sale.order</code>, <code>sale.order.line</code>, <code>crm.team</code>, <code>account.move</code>, <code>res.company</code></td></tr>
+    <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 14px;width:240px;color:#777;">Data</td><td style="padding:10px 14px;">Blacklisted tag, 2 activity types, 3 e-mail templates, daily scheduled action</td></tr>
+    <tr style="border-bottom:1px solid #eee;background:#fafafa;"><td style="padding:10px 14px;width:240px;color:#777;">Automated tests</td><td style="padding:10px 14px;">38 TransactionCase tests: exposure calculation (AR, un-invoiced, draft payments, credit notes, contacts, companies), live status, breach actions and activities, blacklist policies, increases on confirmed orders, limit validation, strict sequential approval, rejection, withdrawal and bypass protection</td></tr>
+    <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 14px;width:240px;color:#777;">Languages</td><td style="padding:10px 14px;">English, Arabic (ar_001) with RTL support</td></tr>
+    <tr style="border-bottom:1px solid #eee;background:#fafafa;"><td style="padding:10px 14px;width:240px;color:#777;">License</td><td style="padding:10px 14px;">LGPL-3</td></tr>
+  </tbody>
+</table>
+
+<!-- ============================== CONTACT ============================== -->
+<div style="margin:52px 0 40px;background:linear-gradient(120deg,#714B67 0%,#017E84 100%);border-radius:18px;padding:36px 40px;color:#fff;">
+  <h2 style="font-size:26px;font-weight:700;margin:0 0 8px;color:#fff;">Support &amp; customization</h2>
+  <p style="font-size:16px;line-height:1.6;margin:0 0 20px;color:#fff;opacity:.95;">Questions, a demo, or an adaptation to your own process? Get in touch.</p>
+  <a href="mailto:ibrahim.yahiah@gmail.com" style="display:inline-block;background:#fff;color:#714B67;font-weight:700;text-decoration:none;border-radius:8px;padding:12px 22px;margin:0 12px 10px 0;">&#9993;  ibrahim.yahiah@gmail.com</a>
+  <a href="https://www.linkedin.com/in/ibrahim-yahia" target="_blank" rel="noopener" style="display:inline-block;border:2px solid #fff;color:#fff;font-weight:700;text-decoration:none;border-radius:8px;padding:10px 22px;margin:0 0 10px 0;">LinkedIn: Ibrahim Yahia</a>
+  <p style="font-size:13px;margin:14px 0 0;opacity:.8;color:#fff;">Author: Ibrahim Yahia &middot; License: LGPL-3</p>
+</div>
+
+</section>

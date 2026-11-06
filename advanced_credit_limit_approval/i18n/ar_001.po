@@ -1,0 +1,965 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* advanced_credit_limit_approval
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-05 00:00+0000\n"
+"PO-Revision-Date: 2026-11-05 00:00+0000\n"
+"Last-Translator: Ibrahim Yahia\n"
+"Language-Team: Arabic\n"
+"Language: ar_001\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+
+#. module: advanced_credit_limit_approval
+#: code:addons/advanced_credit_limit_approval/models/crm_team.py:0
+#, python-format
+msgid "%(user)s cannot be a credit approver: approvers must have access to the Sales application."
+msgstr "لا يمكن أن يكون %(user)s معتمداً ائتمانياً: يجب أن يملك المعتمدون صلاحية الوصول إلى تطبيق المبيعات."
+
+#. module: advanced_credit_limit_approval
+#: code:addons/advanced_credit_limit_approval/models/sale_order.py:0
+#, python-format
+msgid "%s is blacklisted for exceeding the credit limit. Sales orders for this customer are blocked and this quotation cannot be saved."
+msgstr "%s مدرج في القائمة السوداء لتجاوزه الحد الائتماني. أوامر البيع لهذا العميل محظورة ولا يمكن حفظ عرض السعر هذا."
+
+#. module: advanced_credit_limit_approval
+#: code:addons/advanced_credit_limit_approval/models/sale_order.py:0
+#, python-format
+msgid "%s is blacklisted for exceeding the credit limit. You can prepare the quotation, but its confirmation will require approval from the Sales Team approvers."
+msgstr "%s مدرج في القائمة السوداء لتجاوزه الحد الائتماني. يمكنك إعداد عرض السعر، لكن تأكيده سيتطلب موافقة معتمدي فريق المبيعات."
+
+#. module: advanced_credit_limit_approval
+#: model_terms:ir.ui.view,arch_db:advanced_credit_limit_approval.view_order_form_acla
+msgid "."
+msgstr "."
+
+#. module: advanced_credit_limit_approval
+#: model:mail.template,body_html:advanced_credit_limit_approval.mail_template_credit_warning
+msgid ""
+"<div style=\"margin: 0px; padding: 0px;\" t-att-dir=\"'rtl' if (object.lang or '').startswith('ar') else 'ltr'\">\n"
+"    <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"        Dear <t t-out=\"object.name or ''\">Customer</t>,\n"
+"        <br/><br/>\n"
+"        This is a courtesy notice that your outstanding balance with\n"
+"        <t t-out=\"object.acla_company_id.name or ''\">YourCompany</t> has exceeded the credit warning level.\n"
+"        <br/><br/>\n"
+"        Current credit exposure: <strong t-out=\"format_amount(object.acla_exposure_amount, object.acla_currency_id) or ''\">$ 10,000.00</strong>\n"
+"        <br/>\n"
+"        Warning level: <strong t-out=\"format_amount(object.commercial_partner_id.acla_warning_amount, object.acla_currency_id) or ''\">$ 8,000.00</strong>\n"
+"        <br/><br/>\n"
+"        Please arrange a payment at your earliest convenience to avoid any interruption of your orders.\n"
+"        <br/><br/>\n"
+"        Do not hesitate to contact us if you have any questions.\n"
+"        <br/>\n"
+"    </p>\n"
+"</div>\n"
+"            "
+msgstr ""
+"<div style=\"margin: 0px; padding: 0px;\" t-att-dir=\"'rtl' if (object.lang or '').startswith('ar') else 'ltr'\">\n"
+"    <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"        عزيزنا <t t-out=\"object.name or ''\">العميل</t>،\n"
+"        <br/><br/>\n"
+"        نود إعلامكم بأن رصيدكم المستحق لدى\n"
+"        <t t-out=\"object.acla_company_id.name or ''\">شركتك</t> قد تجاوز مستوى التحذير الائتماني.\n"
+"        <br/><br/>\n"
+"        التعرض الائتماني الحالي: <strong t-out=\"format_amount(object.acla_exposure_amount, object.acla_currency_id) or ''\">$ 10,000.00</strong>\n"
+"        <br/>\n"
+"        مستوى التحذير: <strong t-out=\"format_amount(object.commercial_partner_id.acla_warning_amount, object.acla_currency_id) or ''\">$ 8,000.00</strong>\n"
+"        <br/><br/>\n"
+"        يرجى ترتيب السداد في أقرب وقت ممكن لتجنب أي توقف في طلباتكم.\n"
+"        <br/><br/>\n"
+"        لا تترددوا في التواصل معنا إذا كانت لديكم أي استفسارات.\n"
+"        <br/>\n"
+"    </p>\n"
+"</div>\n"
+
+#. module: advanced_credit_limit_approval
+#: model:mail.template,body_html:advanced_credit_limit_approval.mail_template_credit_blocked
+msgid ""
+"<div style=\"margin: 0px; padding: 0px;\" t-att-dir=\"'rtl' if (object.lang or '').startswith('ar') else 'ltr'\">\n"
+"    <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"        Dear <t t-out=\"object.name or ''\">Customer</t>,\n"
+"        <br/><br/>\n"
+"        Your outstanding balance with\n"
+"        <t t-out=\"object.acla_company_id.name or ''\">YourCompany</t> has exceeded your credit limit and your account has been placed on credit hold.\n"
+"        <br/><br/>\n"
+"        Current credit exposure: <strong t-out=\"format_amount(object.acla_exposure_amount, object.acla_currency_id) or ''\">$ 12,000.00</strong>\n"
+"        <br/>\n"
+"        Credit limit: <strong t-out=\"format_amount(object.commercial_partner_id.acla_blocking_amount, object.acla_currency_id) or ''\">$ 10,000.00</strong>\n"
+"        <br/><br/>\n"
+"        New orders will require special approval until the balance is settled. Please arrange a payment as soon as possible.\n"
+"        <br/><br/>\n"
+"        Do not hesitate to contact us if you have any questions.\n"
+"        <br/>\n"
+"    </p>\n"
+"</div>\n"
+"            "
+msgstr ""
+"<div style=\"margin: 0px; padding: 0px;\" t-att-dir=\"'rtl' if (object.lang or '').startswith('ar') else 'ltr'\">\n"
+"    <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"        عزيزنا <t t-out=\"object.name or ''\">العميل</t>،\n"
+"        <br/><br/>\n"
+"        لقد تجاوز رصيدكم المستحق لدى\n"
+"        <t t-out=\"object.acla_company_id.name or ''\">شركتك</t> الحد الائتماني المسموح به، وتم إيقاف حسابكم ائتمانياً.\n"
+"        <br/><br/>\n"
+"        التعرض الائتماني الحالي: <strong t-out=\"format_amount(object.acla_exposure_amount, object.acla_currency_id) or ''\">$ 12,000.00</strong>\n"
+"        <br/>\n"
+"        الحد الائتماني: <strong t-out=\"format_amount(object.commercial_partner_id.acla_blocking_amount, object.acla_currency_id) or ''\">$ 10,000.00</strong>\n"
+"        <br/><br/>\n"
+"        ستتطلب الطلبات الجديدة موافقة خاصة إلى حين تسوية الرصيد. يرجى ترتيب السداد في أسرع وقت ممكن.\n"
+"        <br/><br/>\n"
+"        لا تترددوا في التواصل معنا إذا كانت لديكم أي استفسارات.\n"
+"        <br/>\n"
+"    </p>\n"
+"</div>\n"
+
+#. module: advanced_credit_limit_approval
+#: model:mail.template,body_html:advanced_credit_limit_approval.mail_template_sale_credit_rejected
+msgid ""
+"<div style=\"margin: 0px; padding: 0px;\" t-att-dir=\"'rtl' if (object.partner_id.lang or '').startswith('ar') else 'ltr'\">\n"
+"    <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"        Dear <t t-out=\"object.partner_id.name or ''\">Customer</t>,\n"
+"        <br/><br/>\n"
+"        Please be advised that your order <strong t-out=\"object.name or ''\">S00052</strong>\n"
+"        <t t-if=\"object.client_order_ref\">\n"
+"            (your reference: <t t-out=\"object.client_order_ref or ''\">PO-123</t>)\n"
+"        </t>\n"
+"        has been cancelled following our credit review.\n"
+"        <t t-if=\"object.acla_rejection_reason\">\n"
+"            <br/><br/>\n"
+"            Reason: <t t-out=\"object.acla_rejection_reason or ''\">Outstanding balance</t>\n"
+"        </t>\n"
+"        <br/><br/>\n"
+"        You will not be charged for this order. Do not hesitate to contact us if you have any questions.\n"
+"        <br/>\n"
+"    </p>\n"
+"</div>\n"
+"            "
+msgstr ""
+"<div style=\"margin: 0px; padding: 0px;\" t-att-dir=\"'rtl' if (object.partner_id.lang or '').startswith('ar') else 'ltr'\">\n"
+"    <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"        عزيزنا <t t-out=\"object.partner_id.name or ''\">العميل</t>،\n"
+"        <br/><br/>\n"
+"        نحيطكم علماً بأن طلبكم <strong t-out=\"object.name or ''\">S00052</strong>\n"
+"        <t t-if=\"object.client_order_ref\">\n"
+"            (مرجعكم: <t t-out=\"object.client_order_ref or ''\">PO-123</t>)\n"
+"        </t>\n"
+"        قد تم إلغاؤه بعد المراجعة الائتمانية.\n"
+"        <t t-if=\"object.acla_rejection_reason\">\n"
+"            <br/><br/>\n"
+"            السبب: <t t-out=\"object.acla_rejection_reason or ''\">رصيد مستحق</t>\n"
+"        </t>\n"
+"        <br/><br/>\n"
+"        لن يتم تحصيل أي مبلغ مقابل هذا الطلب. لا تترددوا في التواصل معنا إذا كانت لديكم أي استفسارات.\n"
+"        <br/>\n"
+"    </p>\n"
+"</div>\n"
+
+#. module: advanced_credit_limit_approval
+#: model_terms:ir.ui.view,arch_db:advanced_credit_limit_approval.view_order_form_acla
+msgid ""
+"<i class=\"fa fa-ban\" title=\"Blacklisted\" role=\"img\" aria-label=\"Blacklisted\"/>\n"
+"                    This customer is blacklisted for exceeding the credit limit. Confirmation requires credit approval."
+msgstr ""
+"<i class=\"fa fa-ban\" title=\"القائمة السوداء\" role=\"img\" aria-label=\"القائمة السوداء\"/>\n"
+"                    هذا العميل مدرج في القائمة السوداء لتجاوزه الحد الائتماني. يتطلب التأكيد موافقة ائتمانية."
+
+#. module: advanced_credit_limit_approval
+#: model_terms:ir.ui.view,arch_db:advanced_credit_limit_approval.view_order_form_acla
+msgid ""
+"<i class=\"fa fa-hourglass-half\" title=\"Waiting\" role=\"img\" aria-label=\"Waiting\"/>\n"
+"                    Waiting for credit approval from"
+msgstr ""
+"<i class=\"fa fa-hourglass-half\" title=\"بالانتظار\" role=\"img\" aria-label=\"بالانتظار\"/>\n"
+"                    بانتظار الموافقة الائتمانية من"
+
+#. module: advanced_credit_limit_approval
+#: model_terms:ir.ui.view,arch_db:advanced_credit_limit_approval.res_config_settings_view_form_acla
+msgid "<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-specific.\" groups=\"base.group_multi_company\"/>"
+msgstr "<span class=\"fa fa-lg fa-building-o\" title=\"القيم المحددة هنا خاصة بكل شركة.\" groups=\"base.group_multi_company\"/>"
+
+#. module: advanced_credit_limit_approval
+#: model_terms:ir.ui.view,arch_db:advanced_credit_limit_approval.view_partner_form_acla
+msgid "<span class=\"o_stat_text\">Credit Exposure</span>"
+msgstr "<span class=\"o_stat_text\">التعرض الائتماني</span>"
+
+#. module: advanced_credit_limit_approval
+#: code:addons/advanced_credit_limit_approval/models/sale_order.py:0
+#, python-format
+msgid "All credit approvals granted: the order is confirmed."
+msgstr "تمت جميع الموافقات الائتمانية: تم تأكيد الأمر."
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields,field_description:advanced_credit_limit_approval.field_sale_order__acla_approval_reason
+msgid "Approval Reason"
+msgstr "سبب طلب الموافقة"
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields,field_description:advanced_credit_limit_approval.field_sale_order__acla_approval_round
+msgid "Approval Round"
+msgstr "جولة الموافقة"
+
+#. module: advanced_credit_limit_approval
+#: model_terms:ir.ui.view,arch_db:advanced_credit_limit_approval.view_order_form_acla
+msgid "Approve"
+msgstr "موافقة"
+
+#. module: advanced_credit_limit_approval
+#: model:mail.activity.type,summary:advanced_credit_limit_approval.mail_act_credit_approval
+msgid "Approve or reject the sales order"
+msgstr "الموافقة على أمر البيع أو رفضه"
+
+#. module: advanced_credit_limit_approval
+#: code:addons/advanced_credit_limit_approval/models/sale_order.py:0
+#: model:ir.model.fields.selection,name:advanced_credit_limit_approval.selection__acla_sale_approval_line__state__approved
+#, python-format
+msgid "Approved"
+msgstr "تمت الموافقة"
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields,field_description:advanced_credit_limit_approval.field_acla_sale_approval_line__user_id
+#: model:ir.model.fields,field_description:advanced_credit_limit_approval.field_acla_team_approver__user_id
+msgid "Approver"
+msgstr "المعتمد"
+
+#. module: advanced_credit_limit_approval
+#: model_terms:ir.ui.view,arch_db:advanced_credit_limit_approval.crm_team_view_form_acla
+msgid "Approvers"
+msgstr "المعتمدون"
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields,field_description:advanced_credit_limit_approval.field_res_company__acla_auto_lift_blacklist
+#: model:ir.model.fields,field_description:advanced_credit_limit_approval.field_res_config_settings__acla_auto_lift_blacklist
+msgid "Auto-lift Blacklist"
+msgstr "رفع الإدراج في القائمة السوداء تلقائياً"
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields,field_description:advanced_credit_limit_approval.field_res_partner__acla_available_amount
+msgid "Available Before Blocking"
+msgstr "المتاح قبل الحظر"
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields,field_description:advanced_credit_limit_approval.field_res_partner__acla_is_blacklisted
+#: model:res.partner.category,name:advanced_credit_limit_approval.res_partner_category_blacklisted
+#: model_terms:ir.ui.view,arch_db:advanced_credit_limit_approval.view_partner_form_acla
+msgid "Blacklisted"
+msgstr "القائمة السوداء"
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields,field_description:advanced_credit_limit_approval.field_res_partner__acla_auto_blacklisted
+msgid "Blacklisted Automatically"
+msgstr "أُدرج في القائمة السوداء تلقائياً"
+
+#. module: advanced_credit_limit_approval
+#: code:addons/advanced_credit_limit_approval/models/sale_order.py:0
+#, python-format
+msgid "Blacklisted Customer"
+msgstr "عميل في القائمة السوداء"
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields,field_description:advanced_credit_limit_approval.field_res_company__acla_blacklist_action
+#: model:ir.model.fields,field_description:advanced_credit_limit_approval.field_res_config_settings__acla_blacklist_action
+msgid "Blacklisted Customer Policy"
+msgstr "سياسة العملاء في القائمة السوداء"
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields.selection,name:advanced_credit_limit_approval.selection__res_partner__acla_credit_state__blocked
+#: model:ir.model.fields.selection,name:advanced_credit_limit_approval.selection__res_partner__acla_credit_status__blocked
+msgid "Blocked"
+msgstr "محظور"
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields,field_description:advanced_credit_limit_approval.field_res_partner__acla_can_edit_limits
+msgid "Can Edit Credit Limits"
+msgstr "يمكنه تعديل الحدود الائتمانية"
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields,field_description:advanced_credit_limit_approval.field_sale_order__acla_can_withdraw
+msgid "Can Withdraw"
+msgstr "يمكنه السحب"
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields.selection,name:advanced_credit_limit_approval.selection__acla_sale_approval_line__state__cancelled
+msgid "Cancelled"
+msgstr "ملغي"
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields,field_description:advanced_credit_limit_approval.field_acla_sale_approval_line__note
+msgid "Comment"
+msgstr "تعليق"
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields,field_description:advanced_credit_limit_approval.field_acla_sale_approval_line__company_id
+#: model:ir.model.fields,field_description:advanced_credit_limit_approval.field_acla_team_approver__company_id
+msgid "Company"
+msgstr "الشركة"
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields,field_description:advanced_credit_limit_approval.field_sale_order__acla_company_currency_id
+msgid "Company Currency"
+msgstr "عملة الشركة"
+
+#. module: advanced_credit_limit_approval
+#: model_terms:ir.ui.view,arch_db:advanced_credit_limit_approval.res_config_settings_view_form_acla
+msgid "Compute the real-time credit exposure of customers and enforce their Warning and Blocking amounts"
+msgstr "احتساب التعرض الائتماني للعملاء لحظياً وتطبيق مبالغ التحذير والحظر الخاصة بهم"
+
+#. module: advanced_credit_limit_approval
+#: model:mail.activity.type,name:advanced_credit_limit_approval.mail_act_credit_approval
+#: model_terms:ir.ui.view,arch_db:advanced_credit_limit_approval.view_order_form_acla
+msgid "Credit Approval"
+msgstr "الموافقة الائتمانية"
+
+#. module: advanced_credit_limit_approval
+#: code:addons/advanced_credit_limit_approval/models/sale_order.py:0
+#, python-format
+msgid "Credit approval granted by %(user)s (tier %(tier)s of %(total)s)."
+msgstr "تمت الموافقة الائتمانية من قِبل %(user)s (المستوى %(tier)s من %(total)s)."
+
+#. module: advanced_credit_limit_approval
+#: code:addons/advanced_credit_limit_approval/models/sale_order.py:0
+#, python-format
+msgid "Credit approval rejected by %s; the order is cancelled."
+msgstr "تم رفض الموافقة الائتمانية من قِبل %s؛ تم إلغاء الأمر."
+
+#. module: advanced_credit_limit_approval
+#: code:addons/advanced_credit_limit_approval/models/sale_order.py:0
+#, python-format
+msgid "Credit approval required (tier %(tier)s of %(total)s)"
+msgstr "موافقة ائتمانية مطلوبة (المستوى %(tier)s من %(total)s)"
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields,field_description:advanced_credit_limit_approval.field_sale_order__acla_approval_line_ids
+msgid "Credit Approvals"
+msgstr "الموافقات الائتمانية"
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields,field_description:advanced_credit_limit_approval.field_crm_team__acla_approver_ids
+msgid "Credit Approvers"
+msgstr "معتمدو الائتمان"
+
+#. module: advanced_credit_limit_approval
+#: model_terms:ir.ui.view,arch_db:advanced_credit_limit_approval.view_res_partner_filter_acla
+msgid "Credit Blocked"
+msgstr "محظور ائتمانياً"
+
+#. module: advanced_credit_limit_approval
+#: code:addons/advanced_credit_limit_approval/models/res_partner.py:0
+#, python-format
+msgid "Credit blocked: customer blacklisted"
+msgstr "حظر ائتماني: العميل في القائمة السوداء"
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields,field_description:advanced_credit_limit_approval.field_res_partner__acla_blocking_amount
+msgid "Credit Blocking Amount"
+msgstr "مبلغ الحظر الائتماني"
+
+#. module: advanced_credit_limit_approval
+#: code:addons/advanced_credit_limit_approval/models/res_partner.py:0
+#, python-format
+msgid "Credit blocking limit breached: exposure %(exposure)s exceeds the blocking amount %(limit)s. The customer has been blacklisted."
+msgstr "تم تجاوز حد الحظر الائتماني: التعرض الائتماني %(exposure)s يتجاوز مبلغ الحظر %(limit)s. تم إدراج العميل في القائمة السوداء."
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields,field_description:advanced_credit_limit_approval.field_res_partner__acla_company_id
+msgid "Credit Company"
+msgstr "شركة الائتمان"
+
+#. module: advanced_credit_limit_approval
+#: model_terms:ir.ui.view,arch_db:advanced_credit_limit_approval.view_partner_form_acla
+msgid "Credit Control"
+msgstr "الرقابة الائتمانية"
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields,field_description:advanced_credit_limit_approval.field_res_partner__acla_currency_id
+msgid "Credit Currency"
+msgstr "عملة الائتمان"
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields,field_description:advanced_credit_limit_approval.field_res_partner__acla_exposure_amount
+msgid "Credit Exposure"
+msgstr "التعرض الائتماني"
+
+#. module: advanced_credit_limit_approval
+#: model_terms:ir.ui.view,arch_db:advanced_credit_limit_approval.res_config_settings_view_form_acla
+msgid "Credit Limit Control"
+msgstr "التحكم في الحد الائتماني"
+
+#. module: advanced_credit_limit_approval
+#: model:mail.activity.type,name:advanced_credit_limit_approval.mail_act_credit_followup
+msgid "Credit Limit Follow-Up"
+msgstr "متابعة الحد الائتماني"
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields,field_description:advanced_credit_limit_approval.field_res_company__acla_credit_limit_enabled
+#: model:ir.model.fields,field_description:advanced_credit_limit_approval.field_res_config_settings__acla_credit_limit_enabled
+msgid "Credit Limit Tracking"
+msgstr "تتبع الحد الائتماني"
+
+#. module: advanced_credit_limit_approval
+#: model:mail.template,name:advanced_credit_limit_approval.mail_template_credit_blocked
+msgid "Credit Limit: Account on Hold"
+msgstr "الحد الائتماني: إيقاف الحساب"
+
+#. module: advanced_credit_limit_approval
+#: model:ir.actions.server,name:advanced_credit_limit_approval.ir_cron_acla_evaluate_credit_ir_actions_server
+#: model:ir.cron,cron_name:advanced_credit_limit_approval.ir_cron_acla_evaluate_credit
+msgid "Credit Limit: Re-evaluate customer exposure"
+msgstr "الحد الائتماني: إعادة تقييم التعرض الائتماني للعملاء"
+
+#. module: advanced_credit_limit_approval
+#: model:mail.template,name:advanced_credit_limit_approval.mail_template_credit_warning
+msgid "Credit Limit: Warning Notice"
+msgstr "الحد الائتماني: إشعار تحذير"
+
+#. module: advanced_credit_limit_approval
+#: model_terms:ir.ui.view,arch_db:advanced_credit_limit_approval.view_partner_form_acla
+msgid "Credit limits and exposure are managed on the parent company."
+msgstr "تتم إدارة الحدود والتعرض الائتماني على مستوى الشركة الأم."
+
+#. module: advanced_credit_limit_approval
+#: code:addons/advanced_credit_limit_approval/models/res_partner.py:0
+#, python-format
+msgid "Credit limits of %s cannot be negative. Use 0 to disable a limit."
+msgstr "لا يمكن أن تكون الحدود الائتمانية لـ %s سالبة. استخدم 0 لتعطيل الحد."
+
+#. module: advanced_credit_limit_approval
+#: code:addons/advanced_credit_limit_approval/models/res_partner.py:0
+#, python-format
+msgid "Credit notification e-mail not sent: the customer has no e-mail address."
+msgstr "لم يتم إرسال بريد الإشعار الائتماني: لا يوجد بريد إلكتروني للعميل."
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields,field_description:advanced_credit_limit_approval.field_res_partner__acla_credit_status
+msgid "Credit Status"
+msgstr "الحالة الائتمانية"
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields,help:advanced_credit_limit_approval.field_res_partner__acla_credit_state
+msgid "Credit status at the last evaluation; used to send the breach notifications only once per escalation."
+msgstr "الحالة الائتمانية عند آخر تقييم؛ تُستخدم لإرسال إشعارات التجاوز مرة واحدة فقط لكل تصعيد."
+
+#. module: advanced_credit_limit_approval
+#: code:addons/advanced_credit_limit_approval/models/res_partner.py:0
+#, python-format
+msgid "Credit status improved to %(state)s (exposure %(exposure)s)."
+msgstr "تحسنت الحالة الائتمانية إلى %(state)s (التعرض الائتماني %(exposure)s)."
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields,field_description:advanced_credit_limit_approval.field_res_partner__acla_tracking_enabled
+#: model:ir.model.fields,field_description:advanced_credit_limit_approval.field_sale_order__acla_tracking_enabled
+msgid "Credit Tracking Enabled"
+msgstr "تتبع الائتمان مفعّل"
+
+#. module: advanced_credit_limit_approval
+#: model_terms:ir.ui.view,arch_db:advanced_credit_limit_approval.view_partner_form_acla
+#: model_terms:ir.ui.view,arch_db:advanced_credit_limit_approval.view_res_partner_filter_acla
+msgid "Credit Warning"
+msgstr "تحذير ائتماني"
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields,field_description:advanced_credit_limit_approval.field_res_partner__acla_warning_amount
+msgid "Credit Warning Amount"
+msgstr "مبلغ التحذير الائتماني"
+
+#. module: advanced_credit_limit_approval
+#: code:addons/advanced_credit_limit_approval/models/res_partner.py:0
+#, python-format
+msgid "Credit warning limit breached: exposure %(exposure)s exceeds the warning amount %(limit)s."
+msgstr "تم تجاوز حد التحذير الائتماني: التعرض الائتماني %(exposure)s يتجاوز مبلغ التحذير %(limit)s."
+
+#. module: advanced_credit_limit_approval
+#: code:addons/advanced_credit_limit_approval/models/res_partner.py:0
+#, python-format
+msgid "Credit warning: follow up with the customer"
+msgstr "تحذير ائتماني: تابع مع العميل"
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields,field_description:advanced_credit_limit_approval.field_sale_order__acla_current_approver_id
+msgid "Current Approver"
+msgstr "المعتمد الحالي"
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields,help:advanced_credit_limit_approval.field_sale_order__acla_projected_exposure
+msgid "Current exposure of the customer plus this order when it is not confirmed yet, in company currency."
+msgstr "التعرض الائتماني الحالي للعميل مضافاً إليه هذا الأمر إذا لم يُؤكد بعد، بعملة الشركة."
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields,field_description:advanced_credit_limit_approval.field_sale_order__acla_partner_blacklisted
+msgid "Customer Blacklisted"
+msgstr "العميل في القائمة السوداء"
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields,help:advanced_credit_limit_approval.field_res_partner__acla_draft_payment_amount
+msgid "Customer payments not yet posted. Deducted from the exposure only when \"Deduct Draft Payments\" is enabled in the Sales settings."
+msgstr "مدفوعات العملاء التي لم تُرحّل بعد. تُخصم من التعرض الائتماني فقط عند تفعيل \"خصم المدفوعات المسودة\" في إعدادات المبيعات."
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields,field_description:advanced_credit_limit_approval.field_acla_sale_approval_line__action_date
+msgid "Date"
+msgstr "التاريخ"
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields,help:advanced_credit_limit_approval.field_res_company__acla_deduct_draft_payments
+#: model:ir.model.fields,help:advanced_credit_limit_approval.field_res_config_settings__acla_deduct_draft_payments
+msgid "Deduct customer payments that are still in draft from the credit exposure. Off by default: only posted payments free up credit."
+msgstr "خصم مدفوعات العملاء التي ما زالت مسودة من التعرض الائتماني. معطّل افتراضياً: المدفوعات المرحّلة فقط هي التي تحرر الائتمان."
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields,field_description:advanced_credit_limit_approval.field_res_company__acla_deduct_draft_payments
+#: model:ir.model.fields,field_description:advanced_credit_limit_approval.field_res_config_settings__acla_deduct_draft_payments
+msgid "Deduct Draft Payments"
+msgstr "خصم المدفوعات المسودة"
+
+#. module: advanced_credit_limit_approval
+#: model_terms:ir.ui.view,arch_db:advanced_credit_limit_approval.acla_reject_wizard_view_form
+msgid "Discard"
+msgstr "تجاهل"
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields,field_description:advanced_credit_limit_approval.field_res_partner__acla_draft_payment_amount
+msgid "Draft Customer Payments"
+msgstr "مدفوعات العملاء المسودة"
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields,field_description:advanced_credit_limit_approval.field_res_partner__acla_deduct_draft_payments
+msgid "Draft Payments Deducted"
+msgstr "المدفوعات المسودة مخصومة"
+
+#. module: advanced_credit_limit_approval
+#: model_terms:ir.ui.view,arch_db:advanced_credit_limit_approval.acla_reject_wizard_view_form
+msgid "Explain why the credit approval is rejected..."
+msgstr "اشرح سبب رفض الموافقة الائتمانية..."
+
+#. module: advanced_credit_limit_approval
+#: model:mail.activity.type,summary:advanced_credit_limit_approval.mail_act_credit_followup
+msgid "Follow up on the customer's credit exposure"
+msgstr "متابعة التعرض الائتماني للعميل"
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields.selection,name:advanced_credit_limit_approval.selection__res_company__acla_blacklist_action__force_approval
+msgid "Force Approval"
+msgstr "فرض الموافقة"
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields.selection,name:advanced_credit_limit_approval.selection__res_company__acla_blacklist_action__hard_block
+msgid "Hard Block"
+msgstr "حظر تام"
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields,help:advanced_credit_limit_approval.field_res_company__acla_blacklist_action
+#: model:ir.model.fields,help:advanced_credit_limit_approval.field_res_config_settings__acla_blacklist_action
+msgid ""
+"Hard Block: sales orders cannot be created for blacklisted customers.\n"
+"Force Approval: quotations are allowed but confirmation always goes through the Sales Team approval sequence."
+msgstr ""
+"حظر تام: لا يمكن إنشاء أوامر بيع للعملاء المدرجين في القائمة السوداء.\n"
+"فرض الموافقة: يُسمح بعروض الأسعار لكن التأكيد يمر دائماً عبر تسلسل موافقات فريق المبيعات."
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields,field_description:advanced_credit_limit_approval.field_sale_order__acla_is_current_approver
+msgid "Is Current Approver"
+msgstr "هو المعتمد الحالي"
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields,field_description:advanced_credit_limit_approval.field_res_partner__acla_credit_state
+msgid "Last Notified Credit Status"
+msgstr "آخر حالة ائتمانية تم الإشعار بها"
+
+#. module: advanced_credit_limit_approval
+#: model_terms:ir.ui.view,arch_db:advanced_credit_limit_approval.res_config_settings_view_form_acla
+msgid "Let draft customer payments reduce the credit exposure. Off: only posted payments free up credit"
+msgstr "السماح لمدفوعات العملاء المسودة بتخفيض التعرض الائتماني. عند التعطيل: المدفوعات المرحّلة فقط هي التي تحرر الائتمان"
+
+#. module: advanced_credit_limit_approval
+#: model_terms:ir.ui.view,arch_db:advanced_credit_limit_approval.view_partner_form_acla
+msgid "Limits"
+msgstr "الحدود"
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields,help:advanced_credit_limit_approval.field_res_partner__acla_credit_status
+msgid "Live status computed from the current exposure and limits."
+msgstr "حالة لحظية تُحتسب من التعرض الائتماني الحالي والحدود."
+
+#. module: advanced_credit_limit_approval
+#: model_terms:ir.ui.view,arch_db:advanced_credit_limit_approval.view_sales_order_filter_acla
+msgid "My Credit Approvals"
+msgstr "موافقاتي الائتمانية"
+
+#. module: advanced_credit_limit_approval
+#: model_terms:ir.actions.act_window,help:advanced_credit_limit_approval.action_acla_orders_to_approve
+msgid "No sales order is waiting for your credit approval"
+msgstr "لا توجد أوامر بيع بانتظار موافقتك الائتمانية"
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields.selection,name:advanced_credit_limit_approval.selection__res_partner__acla_credit_state__normal
+#: model:ir.model.fields.selection,name:advanced_credit_limit_approval.selection__res_partner__acla_credit_status__normal
+msgid "Normal"
+msgstr "طبيعية"
+
+#. module: advanced_credit_limit_approval
+#: code:addons/advanced_credit_limit_approval/models/res_partner.py:0
+#, python-format
+msgid "Only Sales Administrators or Accounting Advisers can change customer credit limits."
+msgstr "لا يمكن تعديل الحدود الائتمانية للعملاء إلا لمسؤولي المبيعات أو المستشارين المحاسبيين."
+
+#. module: advanced_credit_limit_approval
+#: code:addons/advanced_credit_limit_approval/models/sale_order.py:0
+#, python-format
+msgid "Only the salesperson of %s or a Sales Administrator can withdraw it."
+msgstr "لا يمكن سحب %s إلا من قِبل مندوب المبيعات الخاص به أو مسؤول المبيعات."
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields,field_description:advanced_credit_limit_approval.field_acla_reject_wizard__order_id
+#: model:ir.model.fields,field_description:advanced_credit_limit_approval.field_acla_sale_approval_line__order_id
+msgid "Order"
+msgstr "الأمر"
+
+#. module: advanced_credit_limit_approval
+#: code:addons/advanced_credit_limit_approval/models/sale_order.py:0
+#, python-format
+msgid "Order %(order)s is already confirmed and the customer %(customer)s is blacklisted: it cannot be increased by %(increase)s. Put the additional amount on a new quotation so it goes through credit approval."
+msgstr "الأمر %(order)s مؤكد بالفعل والعميل %(customer)s مدرج في القائمة السوداء: لا يمكن زيادته بمبلغ %(increase)s. ضع المبلغ الإضافي في عرض سعر جديد ليمر عبر الموافقة الائتمانية."
+
+#. module: advanced_credit_limit_approval
+#: code:addons/advanced_credit_limit_approval/models/sale_order.py:0
+#, python-format
+msgid "Order %(order)s is already confirmed: increasing it by %(increase)s brings the credit exposure of %(customer)s to %(exposure)s, above the blocking amount %(limit)s. Put the additional amount on a new quotation so it goes through credit approval."
+msgstr "الأمر %(order)s مؤكد بالفعل: زيادته بمبلغ %(increase)s ترفع التعرض الائتماني لـ %(customer)s إلى %(exposure)s، أي فوق مبلغ الحظر %(limit)s. ضع المبلغ الإضافي في عرض سعر جديد ليمر عبر الموافقة الائتمانية."
+
+#. module: advanced_credit_limit_approval
+#: code:addons/advanced_credit_limit_approval/models/sale_order.py:0
+#, python-format
+msgid "Order %(order)s requires credit approval but the Sales Team %(team)s has no approvers. Configure them in the Approvers tab of the Sales Team."
+msgstr "الأمر %(order)s يتطلب موافقة ائتمانية لكن فريق المبيعات %(team)s ليس لديه معتمدون. قم بتهيئتهم في علامة تبويب المعتمدين في فريق المبيعات."
+
+#. module: advanced_credit_limit_approval
+#: code:addons/advanced_credit_limit_approval/models/sale_order.py:0
+#, python-format
+msgid "Order %(orders)s is waiting for credit approval; it cannot be modified. Withdraw it from approval first."
+msgstr "الأمر %(orders)s بانتظار الموافقة الائتمانية؛ لا يمكن تعديله. اسحبه من الموافقة أولاً."
+
+#. module: advanced_credit_limit_approval
+#: code:addons/advanced_credit_limit_approval/models/sale_order.py:0
+#, python-format
+msgid "Order %(orders)s is waiting for credit approval; use the Approve, Reject or Withdraw actions."
+msgstr "الأمر %(orders)s بانتظار الموافقة الائتمانية؛ استخدم إجراءات الموافقة أو الرفض أو السحب."
+
+#. module: advanced_credit_limit_approval
+#: code:addons/advanced_credit_limit_approval/models/sale_order.py:0
+#, python-format
+msgid "Order %s has no pending approval step."
+msgstr "لا توجد خطوة موافقة معلقة للأمر %s."
+
+#. module: advanced_credit_limit_approval
+#: code:addons/advanced_credit_limit_approval/models/sale_order.py:0
+#, python-format
+msgid "Order %s is not waiting for credit approval."
+msgstr "الأمر %s ليس بانتظار الموافقة الائتمانية."
+
+#. module: advanced_credit_limit_approval
+#: code:addons/advanced_credit_limit_approval/models/sale_order_line.py:0
+#, python-format
+msgid "Order %s is waiting for credit approval; its lines cannot be modified. Withdraw it from approval first."
+msgstr "الأمر %s بانتظار الموافقة الائتمانية؛ لا يمكن تعديل بنوده. اسحبه من الموافقة أولاً."
+
+#. module: advanced_credit_limit_approval
+#: code:addons/advanced_credit_limit_approval/models/sale_order.py:0
+#, python-format
+msgid "Order %s is waiting for credit approval; only its approvers can confirm it."
+msgstr "الأمر %s بانتظار الموافقة الائتمانية؛ لا يمكن تأكيده إلا من قِبل معتمديه."
+
+#. module: advanced_credit_limit_approval
+#: code:addons/advanced_credit_limit_approval/models/sale_order.py:0
+#, python-format
+msgid "Order %s requires credit approval but has no Sales Team. Set a Sales Team with approvers first."
+msgstr "الأمر %s يتطلب موافقة ائتمانية لكن ليس له فريق مبيعات. حدد فريق مبيعات لديه معتمدون أولاً."
+
+#. module: advanced_credit_limit_approval
+#: code:addons/advanced_credit_limit_approval/models/sale_order.py:0
+#, python-format
+msgid "Orders can only be submitted for credit approval by confirming them."
+msgstr "لا يمكن إرسال الأوامر للموافقة الائتمانية إلا من خلال تأكيدها."
+
+#. module: advanced_credit_limit_approval
+#: model_terms:ir.actions.act_window,help:advanced_credit_limit_approval.action_acla_orders_to_approve
+msgid "Orders exceeding a customer's credit limit are routed here, tier by tier, following the Sales Team approval sequence."
+msgstr "تُحال إلى هنا الأوامر التي تتجاوز الحد الائتماني للعميل، مستوى تلو الآخر، وفق تسلسل موافقات فريق المبيعات."
+
+#. module: advanced_credit_limit_approval
+#: model:ir.actions.act_window,name:advanced_credit_limit_approval.action_acla_orders_to_approve
+#: model:ir.ui.menu,name:advanced_credit_limit_approval.menu_acla_orders_to_approve
+msgid "Orders to Approve"
+msgstr "أوامر بانتظار الموافقة"
+
+#. module: advanced_credit_limit_approval
+#: code:addons/advanced_credit_limit_approval/models/sale_order.py:0
+#, python-format
+msgid "Orders waiting for credit approval must be rejected or withdrawn."
+msgstr "يجب رفض الأوامر التي بانتظار الموافقة الائتمانية أو سحبها."
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields.selection,name:advanced_credit_limit_approval.selection__acla_sale_approval_line__state__pending
+msgid "Pending"
+msgstr "قيد الانتظار"
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields,field_description:advanced_credit_limit_approval.field_res_partner__acla_ar_amount
+msgid "Posted Receivables"
+msgstr "الذمم المدينة المرحّلة"
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields,help:advanced_credit_limit_approval.field_res_partner__acla_exposure_amount
+msgid "Posted receivables + un-invoiced confirmed sales (- draft customer payments when enabled), consolidated on the commercial entity."
+msgstr "الذمم المدينة المرحّلة + المبيعات المؤكدة غير المفوترة (- مدفوعات العملاء المسودة عند التفعيل)، مجمّعة على مستوى الكيان التجاري."
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields,field_description:advanced_credit_limit_approval.field_sale_order__acla_projected_exposure
+msgid "Projected Credit Exposure"
+msgstr "التعرض الائتماني المتوقع"
+
+#. module: advanced_credit_limit_approval
+#: code:addons/advanced_credit_limit_approval/models/sale_order.py:0
+#, python-format
+msgid "Projected credit exposure %(exposure)s exceeds the blocking amount %(limit)s."
+msgstr "التعرض الائتماني المتوقع %(exposure)s يتجاوز مبلغ الحظر %(limit)s."
+
+#. module: advanced_credit_limit_approval
+#: model_terms:ir.ui.view,arch_db:advanced_credit_limit_approval.view_partner_form_acla
+msgid "Re-evaluate Credit Status"
+msgstr "إعادة تقييم الحالة الائتمانية"
+
+#. module: advanced_credit_limit_approval
+#: model_terms:ir.ui.view,arch_db:advanced_credit_limit_approval.view_partner_form_acla
+msgid "Real-time Exposure"
+msgstr "التعرض الائتماني اللحظي"
+
+#. module: advanced_credit_limit_approval
+#: model_terms:ir.ui.view,arch_db:advanced_credit_limit_approval.view_order_form_acla
+msgid "Reject"
+msgstr "رفض"
+
+#. module: advanced_credit_limit_approval
+#: model_terms:ir.ui.view,arch_db:advanced_credit_limit_approval.acla_reject_wizard_view_form
+msgid "Reject and Cancel Order"
+msgstr "رفض وإلغاء الأمر"
+
+#. module: advanced_credit_limit_approval
+#: code:addons/advanced_credit_limit_approval/models/sale_order.py:0
+#: model_terms:ir.ui.view,arch_db:advanced_credit_limit_approval.acla_reject_wizard_view_form
+#, python-format
+msgid "Reject Order"
+msgstr "رفض الأمر"
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model,name:advanced_credit_limit_approval.model_acla_reject_wizard
+msgid "Reject Sales Order Credit Approval"
+msgstr "رفض الموافقة الائتمانية لأمر البيع"
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields.selection,name:advanced_credit_limit_approval.selection__acla_sale_approval_line__state__rejected
+msgid "Rejected"
+msgstr "مرفوض"
+
+#. module: advanced_credit_limit_approval
+#: model_terms:ir.ui.view,arch_db:advanced_credit_limit_approval.acla_reject_wizard_view_form
+msgid "Rejecting cancels the sales order immediately and e-mails the customer."
+msgstr "يؤدي الرفض إلى إلغاء أمر البيع فوراً وإرسال بريد إلكتروني إلى العميل."
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields,field_description:advanced_credit_limit_approval.field_acla_reject_wizard__reason
+#: model:ir.model.fields,field_description:advanced_credit_limit_approval.field_sale_order__acla_rejection_reason
+msgid "Rejection Reason"
+msgstr "سبب الرفض"
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields,help:advanced_credit_limit_approval.field_res_company__acla_auto_lift_blacklist
+#: model:ir.model.fields,help:advanced_credit_limit_approval.field_res_config_settings__acla_auto_lift_blacklist
+msgid "Remove the Blacklisted tag automatically once the exposure falls back under the Blocking amount (only when the tag was applied automatically)."
+msgstr "إزالة وسم القائمة السوداء تلقائياً عند انخفاض التعرض الائتماني إلى ما دون مبلغ الحظر (فقط إذا كان الوسم قد أُضيف تلقائياً)."
+
+#. module: advanced_credit_limit_approval
+#: model_terms:ir.ui.view,arch_db:advanced_credit_limit_approval.res_config_settings_view_form_acla
+msgid "Remove the Blacklisted tag automatically when the exposure falls back under the Blocking amount"
+msgstr "إزالة وسم القائمة السوداء تلقائياً عند انخفاض التعرض الائتماني إلى ما دون مبلغ الحظر"
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields,field_description:advanced_credit_limit_approval.field_acla_sale_approval_line__round
+msgid "Round"
+msgstr "الجولة"
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model,name:advanced_credit_limit_approval.model_acla_sale_approval_line
+msgid "Sales Order Credit Approval Step"
+msgstr "خطوة الموافقة الائتمانية لأمر البيع"
+
+#. module: advanced_credit_limit_approval
+#: model_terms:ir.ui.view,arch_db:advanced_credit_limit_approval.crm_team_view_form_acla
+msgid ""
+"Sales orders exceeding the customer credit limits are approved by these users strictly in this order.\n"
+"                        Each user can only act on their own tier."
+msgstr ""
+"يعتمد هؤلاء المستخدمون أوامر البيع التي تتجاوز الحدود الائتمانية للعميل بهذا الترتيب تحديداً.\n"
+"                        لا يمكن لأي مستخدم التصرف إلا في مستواه الخاص."
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields,field_description:advanced_credit_limit_approval.field_acla_team_approver__team_id
+msgid "Sales Team"
+msgstr "فريق المبيعات"
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model,name:advanced_credit_limit_approval.model_acla_team_approver
+msgid "Sales Team Credit Approver"
+msgstr "معتمد الائتمان لفريق المبيعات"
+
+#. module: advanced_credit_limit_approval
+#: model:mail.template,name:advanced_credit_limit_approval.mail_template_sale_credit_rejected
+msgid "Sales: Order Cancelled (Credit Approval Rejected)"
+msgstr "المبيعات: إلغاء الأمر (رفض الموافقة الائتمانية)"
+
+#. module: advanced_credit_limit_approval
+#: model:mail.template,description:advanced_credit_limit_approval.mail_template_sale_credit_rejected
+msgid "Sent automatically to the customer when a credit approver rejects an order"
+msgstr "يُرسل تلقائياً إلى العميل عندما يرفض معتمد الائتمان أمراً"
+
+#. module: advanced_credit_limit_approval
+#: model:mail.template,description:advanced_credit_limit_approval.mail_template_credit_blocked
+msgid "Sent automatically when a customer exceeds the credit blocking amount"
+msgstr "يُرسل تلقائياً عندما يتجاوز العميل مبلغ الحظر الائتماني"
+
+#. module: advanced_credit_limit_approval
+#: model:mail.template,description:advanced_credit_limit_approval.mail_template_credit_warning
+msgid "Sent automatically when a customer exceeds the credit warning amount"
+msgstr "يُرسل تلقائياً عندما يتجاوز العميل مبلغ التحذير الائتماني"
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields,field_description:advanced_credit_limit_approval.field_acla_team_approver__sequence
+msgid "Sequence"
+msgstr "التسلسل"
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields,field_description:advanced_credit_limit_approval.field_acla_sale_approval_line__state
+msgid "Status"
+msgstr "الحالة"
+
+#. module: advanced_credit_limit_approval
+#: code:addons/advanced_credit_limit_approval/models/sale_order.py:0
+#, python-format
+msgid "Submitted for credit approval."
+msgstr "تم الإرسال للموافقة الائتمانية."
+
+#. module: advanced_credit_limit_approval
+#: code:addons/advanced_credit_limit_approval/models/res_partner.py:0
+#, python-format
+msgid "The Blacklisted tag was removed automatically."
+msgstr "تمت إزالة وسم القائمة السوداء تلقائياً."
+
+#. module: advanced_credit_limit_approval
+#: code:addons/advanced_credit_limit_approval/models/res_partner.py:0
+#, python-format
+msgid "The credit warning amount (%(warning)s) of %(partner)s cannot be higher than its blocking amount (%(blocking)s)."
+msgstr "لا يمكن أن يكون مبلغ التحذير الائتماني (%(warning)s) لـ %(partner)s أعلى من مبلغ الحظر الخاص به (%(blocking)s)."
+
+#. module: advanced_credit_limit_approval
+#: code:addons/advanced_credit_limit_approval/models/sale_order.py:0
+#, python-format
+msgid "The customer %s is blacklisted."
+msgstr "العميل %s مدرج في القائمة السوداء."
+
+#. module: advanced_credit_limit_approval
+#: code:addons/advanced_credit_limit_approval/models/sale_order.py:0
+#, python-format
+msgid "The customer %s is blacklisted: sales orders are blocked by the credit limit policy."
+msgstr "العميل %s مدرج في القائمة السوداء: أوامر البيع محظورة وفق سياسة الحد الائتماني."
+
+#. module: advanced_credit_limit_approval
+#: model_terms:ir.ui.view,arch_db:advanced_credit_limit_approval.view_order_form_acla
+msgid "The order will go back to Quotation and the pending approvals will be cancelled. Continue?"
+msgstr "سيعود الأمر إلى عرض سعر وسيتم إلغاء الموافقات المعلقة. هل تريد المتابعة؟"
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields,field_description:advanced_credit_limit_approval.field_acla_sale_approval_line__sequence
+#: model:ir.model.fields,field_description:advanced_credit_limit_approval.field_acla_team_approver__tier
+msgid "Tier"
+msgstr "المستوى"
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields,help:advanced_credit_limit_approval.field_res_company__acla_credit_limit_enabled
+#: model:ir.model.fields,help:advanced_credit_limit_approval.field_res_config_settings__acla_credit_limit_enabled
+#: model:ir.model.fields,help:advanced_credit_limit_approval.field_sale_order__acla_tracking_enabled
+msgid "Track the real-time credit exposure of customers and enforce their Warning / Blocking amounts."
+msgstr "تتبع التعرض الائتماني للعملاء لحظياً وتطبيق مبالغ التحذير والحظر الخاصة بهم."
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields,field_description:advanced_credit_limit_approval.field_res_partner__acla_uninvoiced_amount
+msgid "Un-invoiced Confirmed Sales"
+msgstr "المبيعات المؤكدة غير المفوترة"
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields,help:advanced_credit_limit_approval.field_crm_team__acla_approver_ids
+msgid "Users who approve, in this exact order, sales orders that exceed the customer credit limits."
+msgstr "المستخدمون الذين يعتمدون، بهذا الترتيب تحديداً، أوامر البيع التي تتجاوز الحدود الائتمانية للعميل."
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields.selection,name:advanced_credit_limit_approval.selection__sale_order__state__waiting_approval
+msgid "Waiting Approval"
+msgstr "بانتظار الموافقة"
+
+#. module: advanced_credit_limit_approval
+#: model_terms:ir.ui.view,arch_db:advanced_credit_limit_approval.view_sales_order_filter_acla
+msgid "Waiting Credit Approval"
+msgstr "بانتظار الموافقة الائتمانية"
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields.selection,name:advanced_credit_limit_approval.selection__res_partner__acla_credit_state__warning
+#: model:ir.model.fields.selection,name:advanced_credit_limit_approval.selection__res_partner__acla_credit_status__warning
+msgid "Warning"
+msgstr "تحذير"
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields,help:advanced_credit_limit_approval.field_res_partner__acla_warning_amount
+msgid "When the credit exposure exceeds this amount the customer is e-mailed, the event is logged and a follow-up activity is assigned to the salesperson. 0 disables the warning."
+msgstr "عندما يتجاوز التعرض الائتماني هذا المبلغ يتم إرسال بريد إلكتروني إلى العميل وتسجيل الحدث وإسناد نشاط متابعة إلى مندوب المبيعات. القيمة 0 تعطّل التحذير."
+
+#. module: advanced_credit_limit_approval
+#: model:ir.model.fields,help:advanced_credit_limit_approval.field_res_partner__acla_blocking_amount
+msgid "When the credit exposure exceeds this amount the warning actions are executed, the customer is blacklisted and new orders require approval. 0 disables blocking."
+msgstr "عندما يتجاوز التعرض الائتماني هذا المبلغ يتم تنفيذ إجراءات التحذير وإدراج العميل في القائمة السوداء وتتطلب الطلبات الجديدة الموافقة. القيمة 0 تعطّل الحظر."
+
+#. module: advanced_credit_limit_approval
+#: model_terms:ir.ui.view,arch_db:advanced_credit_limit_approval.view_order_form_acla
+msgid "Withdraw from Approval"
+msgstr "سحب من الموافقة"
+
+#. module: advanced_credit_limit_approval
+#: code:addons/advanced_credit_limit_approval/models/sale_order.py:0
+#, python-format
+msgid "Withdrawn from credit approval by %s."
+msgstr "تم السحب من الموافقة الائتمانية من قِبل %s."
+
+#. module: advanced_credit_limit_approval
+#: code:addons/advanced_credit_limit_approval/models/sale_order.py:0
+#, python-format
+msgid "You cannot approve or reject %(order)s: tier %(tier)s must be handled by %(user)s."
+msgstr "لا يمكنك الموافقة على %(order)s أو رفضه: يجب أن يتولى %(user)s المستوى %(tier)s."
+
+#. module: advanced_credit_limit_approval
+#: model:mail.template,subject:advanced_credit_limit_approval.mail_template_credit_warning
+msgid "{{ object.acla_company_id.name }}: credit limit notice"
+msgstr "{{ object.acla_company_id.name }}: إشعار بشأن الحد الائتماني"
+
+#. module: advanced_credit_limit_approval
+#: model:mail.template,subject:advanced_credit_limit_approval.mail_template_credit_blocked
+msgid "{{ object.acla_company_id.name }}: your account is on credit hold"
+msgstr "{{ object.acla_company_id.name }}: تم إيقاف حسابك ائتمانياً"
+
+#. module: advanced_credit_limit_approval
+#: model:mail.template,subject:advanced_credit_limit_approval.mail_template_sale_credit_rejected
+msgid "{{ object.company_id.name }} Order Cancelled (Ref {{ object.name or 'n/a' }})"
+msgstr "{{ object.company_id.name }} إلغاء الأمر (المرجع {{ object.name or 'n/a' }})"

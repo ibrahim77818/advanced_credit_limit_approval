@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_acla_team_approver_user,acla.team.approver.user,model_acla_team_approver,sales_team.group_sale_salesman,1,0,0,0
+access_acla_team_approver_manager,acla.team.approver.manager,model_acla_team_approver,sales_team.group_sale_manager,1,1,1,1
+access_acla_sale_approval_line_user,acla.sale.approval.line.user,model_acla_sale_approval_line,sales_team.group_sale_salesman,1,0,0,0
+access_acla_sale_approval_line_account,acla.sale.approval.line.account,model_acla_sale_approval_line,account.group_account_invoice,1,0,0,0
+access_acla_reject_wizard_user,acla.reject.wizard.user,model_acla_reject_wizard,sales_team.group_sale_salesman,1,1,1,0

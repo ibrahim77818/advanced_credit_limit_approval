@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_acla" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.acla</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="sale.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='quotation_order_setting_container']" position="after">
+                <h2>Credit Limit Control</h2>
+                <div class="row mt16 o_settings_container" name="acla_credit_limit_setting_container">
+                    <div class="col-12 col-lg-6 o_setting_box" id="acla_credit_limit_tracking">
+                        <div class="o_setting_left_pane">
+                            <field name="acla_credit_limit_enabled"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="acla_credit_limit_enabled"/>
+                            <span class="fa fa-lg fa-building-o" title="Values set here are company-specific." groups="base.group_multi_company"/>
+                            <div class="text-muted">
+                                Compute the real-time credit exposure of customers and enforce their Warning and Blocking amounts
+                            </div>
+                            <div class="content-group" attrs="{'invisible': [('acla_credit_limit_enabled', '=', False)]}">
+                                <div class="mt16">
+                                    <label for="acla_blacklist_action" class="o_light_label"/>
+                                    <field name="acla_blacklist_action" widget="radio" class="o_light_label"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6 o_setting_box" id="acla_deduct_draft_payments"
+                         attrs="{'invisible': [('acla_credit_limit_enabled', '=', False)]}">
+                        <div class="o_setting_left_pane">
+                            <field name="acla_deduct_draft_payments"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="acla_deduct_draft_payments"/>
+                            <div class="text-muted">
+                                Let draft customer payments reduce the credit exposure. Off: only posted payments free up credit
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6 o_setting_box" id="acla_auto_lift_blacklist"
+                         attrs="{'invisible': [('acla_credit_limit_enabled', '=', False)]}">
+                        <div class="o_setting_left_pane">
+                            <field name="acla_auto_lift_blacklist"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="acla_auto_lift_blacklist"/>
+                            <div class="text-muted">
+                                Remove the Blacklisted tag automatically when the exposure falls back under the Blocking amount
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

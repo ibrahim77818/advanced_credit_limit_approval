@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="mail_act_credit_followup" model="mail.activity.type">
+        <field name="name">Credit Limit Follow-Up</field>
+        <field name="summary">Follow up on the customer's credit exposure</field>
+        <field name="icon">fa-exclamation-triangle</field>
+        <field name="res_model">res.partner</field>
+        <field name="delay_count">0</field>
+        <field name="sequence">90</field>
+    </record>
+    <record id="mail_act_credit_approval" model="mail.activity.type">
+        <field name="name">Credit Approval</field>
+        <field name="summary">Approve or reject the sales order</field>
+        <field name="icon">fa-check-square-o</field>
+        <field name="res_model">sale.order</field>
+        <field name="delay_count">0</field>
+        <field name="sequence">91</field>
+    </record>
+</odoo>

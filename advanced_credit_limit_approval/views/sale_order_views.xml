@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_order_form_acla" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit.acla</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header/button[@name='action_draft']" position="after">
+                <field name="acla_is_current_approver" invisible="1"/>
+                <field name="acla_can_withdraw" invisible="1"/>
+                <button name="action_acla_approve" type="object" string="Approve"
+                        class="btn-primary" data-hotkey="shift+a"
+                        attrs="{'invisible': [('acla_is_current_approver', '=', False)]}"/>
+                <button name="action_acla_open_reject_wizard" type="object" string="Reject"
+                        class="btn-danger" data-hotkey="shift+r"
+                        attrs="{'invisible': [('acla_is_current_approver', '=', False)]}"/>
+                <button name="action_acla_withdraw" type="object" string="Withdraw from Approval"
+                        confirm="The order will go back to Quotation and the pending approvals will be cancelled. Continue?"
+                        attrs="{'invisible': [('acla_can_withdraw', '=', False)]}"/>
+            </xpath>
+            <xpath expr="//header/field[@name='state']" position="attributes">
+                <attribute name="statusbar_visible">draft,sent,waiting_approval,sale</attribute>
+            </xpath>
+            <xpath expr="//sheet" position="before">
+                <field name="acla_tracking_enabled" invisible="1"/>
+                <field name="acla_partner_blacklisted" invisible="1"/>
+                <div class="alert alert-danger mb-0 o_acla_banner" role="alert"
+                     attrs="{'invisible': ['|', '|', ('acla_tracking_enabled', '=', False), ('acla_partner_blacklisted', '=', False), ('state', 'not in', ['draft', 'sent'])]}">
+                    <i class="fa fa-ban" title="Blacklisted" role="img" aria-label="Blacklisted"/>
+                    This customer is blacklisted for exceeding the credit limit. Confirmation requires credit approval.
+                </div>
+                <div class="alert alert-info mb-0 o_acla_banner" role="alert"
+                     attrs="{'invisible': [('state', '!=', 'waiting_approval')]}">
+                    <i class="fa fa-hourglass-half" title="Waiting" role="img" aria-label="Waiting"/>
+                    Waiting for credit approval from <field name="acla_current_approver_id" class="fw-bold" readonly="1"/>.
+                </div>
+            </xpath>
+            <xpath expr="//field[@name='order_line']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', 'in', ('done', 'cancel', 'waiting_approval'))]}</attribute>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Credit Approval" name="acla_credit_approval"
+                      attrs="{'invisible': [('acla_approval_line_ids', '=', [])]}">
+                    <group>
+                        <group>
+                            <field name="acla_company_currency_id" invisible="1"/>
+                            <field name="acla_projected_exposure"
+                                   attrs="{'invisible': [('acla_tracking_enabled', '=', False)]}"/>
+                            <field name="acla_approval_round"/>
+                        </group>
+                        <group>
+                            <field name="acla_approval_reason"/>
+                            <field name="acla_rejection_reason"
+                                   attrs="{'invisible': [('acla_rejection_reason', '=', False)]}"/>
+                        </group>
+                    </group>
+                    <field name="acla_approval_line_ids" readonly="1">
+                        <tree decoration-success="state == 'approved'"
+                              decoration-danger="state == 'rejected'"
+                              decoration-muted="state == 'cancelled'"
+                              decoration-info="state == 'pending'">
+                            <field name="round"/>
+                            <field name="sequence"/>
+                            <field name="user_id" widget="many2one_avatar_user"/>
+                            <field name="state" widget="badge"
+                                   decoration-success="state == 'approved'"
+                                   decoration-danger="state == 'rejected'"
+                                   decoration-info="state == 'pending'"/>
+                            <field name="action_date"/>
+                            <field name="note"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_quotation_tree_acla" model="ir.ui.view">
+        <field name="name">sale.order.tree.inherit.acla</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='state']" position="attributes">
+                <attribute name="decoration-warning">state == 'waiting_approval'</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_sales_order_filter_acla" model="ir.ui.view">
+        <field name="name">sale.order.search.inherit.acla</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='activities_overdue']" position="before">
+                <separator/>
+                <filter string="Waiting Credit Approval" name="acla_waiting_approval"
+                        domain="[('state', '=', 'waiting_approval')]"/>
+                <filter string="My Credit Approvals" name="acla_my_approvals"
+                        domain="[('acla_current_approver_id', '=', uid)]"/>
+                <separator/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_acla_orders_to_approve" model="ir.actions.act_window">
+        <field name="name">Orders to Approve</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">tree,form,kanban,activity</field>
+        <field name="domain">[('state', '=', 'waiting_approval')]</field>
+        <field name="context">{'search_default_acla_my_approvals': 1}</field>
+        <field name="search_view_id" ref="sale.view_sales_order_filter"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No sales order is waiting for your credit approval
+            </p>
+            <p>
+                Orders exceeding a customer's credit limit are routed here, tier by tier, following the Sales Team approval sequence.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_acla_orders_to_approve"
+              name="Orders to Approve"
+              parent="sale.sale_order_menu"
+              action="action_acla_orders_to_approve"
+              groups="sales_team.group_sale_salesman"
+              sequence="25"/>
+</odoo>
